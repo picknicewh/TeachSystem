@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="第"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space"
+                android:gravity="center"
+                android:text="节"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space"
+                android:gravity="center"
+                android:text="第"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="节"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x4" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space"
+                android:gravity="center"
+                android:text="第"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="节"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x4" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space"
+                android:gravity="center"
+                android:text="第"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_x4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="节"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/space_x0.1"
+            android:layout_height="match_parent"
+            android:background="@color/divine_line_color" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_week"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x6"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

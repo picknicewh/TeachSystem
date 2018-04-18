@@ -1,0 +1,216 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mayi.yun.teachsystem.ui.home.HomeFragment">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+        <LinearLayout
+
+            android:background="@color/white"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今天是：" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2018年04月17日  星期二" />
+        </LinearLayout>
+        <TableLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_attend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_attend"
+                    android:gravity="center"
+                    android:padding="@dimen/space_x2"
+                    android:text="考勤"
+                    android:textSize="@dimen/ts_large" />
+
+                <View
+                    android:layout_width="@dimen/space_x0.1"
+                    android:layout_height="match_parent"
+                    android:background="@color/divine_line_color" />
+
+
+                <TextView
+                    android:id="@+id/tv_course"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_course"
+                    android:gravity="center"
+                    android:padding="@dimen/space_x2"
+                    android:text="课程表"
+                    android:textSize="@dimen/ts_large" />
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+
+            <TableRow
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_detail"
+                    android:gravity="center"
+                    android:padding="@dimen/space_x2"
+                    android:text="签到明细"
+                    android:textSize="@dimen/ts_large" />
+
+                <View
+                    android:layout_width="@dimen/space_x0.1"
+                    android:layout_height="match_parent"
+                    android:background="@color/divine_line_color" />
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_member"
+                    android:gravity="center"
+                    android:padding="@dimen/space_x2"
+                    android:text="班级信息"
+                    android:textSize="@dimen/ts_large" />
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_x0.1"
+                android:background="@color/divine_line_color" />
+        </TableLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/space"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:orientation="vertical"
+            android:padding="@dimen/space">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/space"
+                    android:src="@mipmap/ic_report" />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_image"
+                    android:text="当前课"
+                    android:textColor="@color/main_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_course_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/text"
+                    android:text="(第5节)"
+                    android:textColor="@color/main_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_week_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text"
+                    android:layout_toRightOf="@+id/iv_image"
+                    android:text="周一   5-8节"
+                    android:textSize="@dimen/ts_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="考勤"
+                    android:textColor="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="程序设计基础"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/ts_x_large" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/space_x0.5"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16届计科1班*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="人数" />
+
+                <TextView
+                    android:id="@+id/tv_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="58人" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
