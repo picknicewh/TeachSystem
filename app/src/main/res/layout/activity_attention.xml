@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS">
+   <LinearLayout
+       android:layout_marginBottom="@dimen/space"
+       android:background="@color/white"
+       android:padding="@dimen/space"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:src="@mipmap/ic_person"
+           android:layout_marginRight="@dimen/space"
+           android:layout_width="@dimen/space_x6"
+           android:layout_height="@dimen/space_x6" />
+       <LinearLayout
+           android:layout_gravity="center"
+           android:orientation="vertical"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/tv_name"
+               android:text="夏璐"
+               android:textColor="@color/main_text_color"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <TextView
+               android:id="@+id/tv_class"
+               android:layout_marginTop="@dimen/space"
+               android:text="计算机科学与技术"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_gravity="center"
+           android:orientation="vertical"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+          <TextView
+              android:text="2018.4.21"
+              android:id="@+id/tv_date"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+           <TextView
+               android:id="@+id/tv_week"
+               android:text="星期三"
+               android:layout_marginTop="@dimen/space"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+   </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

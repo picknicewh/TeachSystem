@@ -2,9 +2,8 @@ package com.mayi.yun.teachsystem.ui.study;
 
 
 import com.mayi.yun.teachsystem.base.BasePresenter;
-import com.mayi.yun.teachsystem.bean.StudyVo;
 import com.mayi.yun.teachsystem.bean.Result;
-import com.mayi.yun.teachsystem.network.ApiService;
+import com.mayi.yun.teachsystem.bean.StudyVo;
 import com.mayi.yun.teachsystem.network.RetrofitManager;
 import com.mayi.yun.teachsystem.network.RxSchedulers;
 import com.mayi.yun.teachsystem.network.ThrowCustomer;
@@ -33,7 +32,7 @@ public class StudySystemPresenter extends BasePresenter<StudySystemContract.View
 
     @Override
     public void getKnowledgeSystemList() {
-        RetrofitManager.create(ApiService.class, WeXinApiServer.HOST)
+        RetrofitManager.create(WeXinApiServer.class, WeXinApiServer.HOST)
                 .getKnowledgeSystem()
                 .compose(RxSchedulers.<Result<List<StudyVo>>>applySchedulers())
                 .compose(mView.<Result<List<StudyVo>>>bindToLife())

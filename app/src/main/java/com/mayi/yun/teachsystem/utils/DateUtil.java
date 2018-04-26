@@ -9,6 +9,7 @@ import com.mayi.yun.teachsystem.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,6 @@ import java.util.List;
  */
 public class DateUtil {
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    private static SimpleDateFormat formatTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 以yyyy-MM-dd格式获取日期
@@ -32,6 +32,15 @@ public class DateUtil {
      */
     public static String getFormatDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    /**
+     * 以yyyy-MM-dd格式获取日期
+     *
+     * @param date 日期
+     */
+    public static String getChinaFormatDate(Date date) {
+        return new SimpleDateFormat("yyyy年MM月dd日").format(date);
     }
 
     /**
@@ -45,6 +54,22 @@ public class DateUtil {
 
     public static String getFormatHourDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+    }
+
+    /**
+     * 获取传入的date为星期几
+     *
+     * @param dt
+     * @return
+     */
+    public static String getWeekOfDate(Date dt) {
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        return weekDays[w];
     }
 
     /**
@@ -65,6 +90,37 @@ public class DateUtil {
 
         }
         return 0;
+    }
+
+
+    /**
+     * 获取本周的日期
+     */
+    public static List<String> getWeekdays() {
+        List<String> dateList = new ArrayList<>();
+        int FIRST_DAY = Calendar.MONDAY;
+        Calendar calendar = Calendar.getInstance();
+        while (calendar.get(Calendar.DAY_OF_WEEK) != FIRST_DAY) {
+            calendar.add(Calendar.DATE, -1);
+        }
+        for (int i = 0; i < 7; i++) {
+            dateList.add(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dateList;
+    }
+
+    /**
+     * 获取传入的date为位置
+     *
+     * @return
+     */
+    public static int getWeekOfPosition() {
+        Calendar cal = Calendar.getInstance();
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w == 0) w = 6;
+        else w = w - 1;
+        return w;
     }
 
     /**

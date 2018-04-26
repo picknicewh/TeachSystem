@@ -7,6 +7,8 @@
     <color name="txt_color">#48495F</color>
     <color name="item_bg">#FFFFFF</color>
     <color name="bg">#F0F0F0</color>
+    <color name="pink">#f3c9f5</color>
+    <color name="minor_text">#a0a0a0</color><!-- 次要的字体的颜色 -->
     <color name="spinner_bg">#333244</color>
     <color name="new_text_color">#555771</color>
     <color name="white_text_color">#F0F0F0</color>

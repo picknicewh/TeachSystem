@@ -13,8 +13,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mayi.yun.teachsystem.bean.CourseInfo;
+import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.bean.VacationVo;
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.util.TypedValue.COMPLEX_UNIT_IN;
@@ -34,7 +40,104 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
  * ================================================
  */
 public class G {
+    public  static List<UserInfo> getUserInfoList() {
+        List<UserInfo> userInfoList = new ArrayList<>();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setTruename("夏璐");
+        userInfo.setUserSn("20145166");
+        userInfo.setPhone("13579716544");
+        userInfo.setPosition("班长");
+        userInfoList.add(userInfo);
+        UserInfo userInfo2 = new UserInfo();
+        userInfo2.setTruename("王毅");
+        userInfo2.setUserSn("20140106");
+        userInfo2.setPhone("135797871495");
+        userInfo2.setPosition("学习委员");
+        userInfoList.add(userInfo2);
+        UserInfo userInfo3 = new UserInfo();
+        userInfo3.setTruename("何晓磊");
+        userInfo3.setUserSn("20140113");
+        userInfo3.setPhone("13797274861");
+        userInfo3.setPosition("无");
+        userInfoList.add(userInfo3);
+        UserInfo userInfo4 = new UserInfo();
+        userInfo4.setTruename("白江");
+        userInfo4.setUserSn("20143018");
+        userInfo4.setPhone("13185276597");
+        userInfo4.setPosition("无");
+        userInfoList.add(userInfo4);
+        UserInfo userInfo5= new UserInfo();
+        userInfo5.setTruename("吕兴瑜");
+        userInfo5.setUserSn("20142361");
+        userInfo5.setPhone("13836275970");
+        userInfo5.setPosition("无");
+        userInfoList.add(userInfo5);
+        UserInfo userInfo6= new UserInfo();
+        userInfo6.setTruename("常余");
+        userInfo6.setUserSn("20140117");
+        userInfo6.setPhone("13736278942");
+        userInfo6.setPosition("无");
+        userInfoList.add(userInfo6);
+        UserInfo userInfo7= new UserInfo();
+        userInfo7.setTruename("梁杰杰");
+        userInfo7.setUserSn("20140125");
+        userInfo7.setPhone("13836273324");
+        userInfo7.setPosition("无");
+        userInfoList.add(userInfo6);
+        return userInfoList;
+    }
+    public static List<CourseInfo> getCourseInfoList(){
+        List<CourseInfo> courseInfoList = new ArrayList<>();
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setAgree(true);
+        courseInfo.setAttend(true);
+        courseInfo.setName("web信息管理系统开发");
+        courseInfo.setTeacher("刘江霞");
+        courseInfo.setTime("8:00-9:50");
+        courseInfo.setRoom("2S-515");
+        courseInfoList.add(courseInfo);
+        CourseInfo courseInfo2 = new CourseInfo();
+        courseInfo2.setAgree(true);
+        courseInfo2.setAttend(true);
+        courseInfo2.setName("Android技术与应用");
+        courseInfo2.setTeacher("高挺挺");
+        courseInfo2.setTime("10:00-11:40");
+        courseInfo2.setRoom("2S-513");
+        courseInfoList.add(courseInfo2);
+        CourseInfo courseInfo3 = new CourseInfo();
+        courseInfo3.setAgree(false);
+        courseInfo3.setAttend(false);
+        courseInfo3.setName("职业生涯与就业指导");
+        courseInfo3.setTeacher("刘江霞");
+        courseInfo3.setTime("19:00-8:40");
+        courseInfo3.setRoom("5406");
+        courseInfoList.add(courseInfo3);
 
+        return courseInfoList;
+    }
+
+    public static  List<VacationVo> getVacationVoList(){
+        List<VacationVo> vacationVoList = new ArrayList<>();
+        VacationVo vacationVo = new VacationVo();
+        vacationVo.setTs_name("吕兴瑜");
+        vacationVo.setBack_school_date("2017-05-26 8:00");
+        vacationVo.setDay_number(String.valueOf(1));
+        vacationVo.setVa_content("生病了");
+        vacationVoList.add(vacationVo);
+        VacationVo vacationVo2 = new VacationVo();
+        vacationVo2.setTs_name("梁杰杰");
+        vacationVo2.setBack_school_date("2017-05-28 8:00");
+        vacationVo2.setDay_number(String.valueOf(3));
+        vacationVo2.setVa_content("回家");
+        vacationVoList.add(vacationVo2);
+        VacationVo vacationVo3 = new VacationVo();
+        vacationVo3.setTs_name("常余");
+        vacationVo3.setBack_school_date("2017-05-27 8:00");
+        vacationVo3.setDay_number(String.valueOf(2));
+        vacationVo3.setVa_content("回家");
+        vacationVoList.add(vacationVo3);
+        return vacationVoList;
+    }
     /**
      * 调试信息
      */

@@ -112,7 +112,9 @@ public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> 
             mPresenter.detachView();
         }
     }
-
+    public void setLeftIconGone(){
+        ivLeft.setVisibility(View.GONE);
+    }
     /**
      * 设置左图标
      *

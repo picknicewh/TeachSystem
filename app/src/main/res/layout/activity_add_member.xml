@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space"
+        android:background="@drawable/round_grey_bg"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/space_x8"
+            android:layout_height="@dimen/space_x8"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/space"
+            android:src="@mipmap/ic_person" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/space"
+            android:text="设置头像" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="姓名：" />
+
+            <EditText
+
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="请输入名字"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="号码：" />
+
+            <EditText
+
+                android:id="@+id/tv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="请输入名字"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="角色：" />
+
+            <RadioGroup
+                android:id="@+id/rg_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space"
+                    android:checked="true"
+                    android:text="学生" />
+
+                <RadioButton
+                    android:id="@+id/rb_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="老师" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="性别：" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_men"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space"
+                    android:checked="true"
+                    android:text="男" />
+
+                <RadioButton
+                    android:id="@+id/rv_feman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="女" />
+            </RadioGroup>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="生日" />
+
+            <TextView
+                android:id="@+id/tv_birthday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawablePadding="@dimen/space_x0.5"
+                android:drawableRight="@mipmap/ic_arrow_down"
+                android:gravity="right"
+                android:hint="请选择生日"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="班级" />
+
+            <TextView
+                android:id="@+id/tv_class"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawablePadding="@dimen/space_x0.5"
+                android:drawableRight="@mipmap/ic_arrow_down"
+                android:gravity="right"
+                android:hint="请选择班级"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:id="@+id/tv_position_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="职务" />
+
+            <TextView
+                android:id="@+id/tv_position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawablePadding="@dimen/space_x0.5"
+                android:drawableRight="@mipmap/ic_arrow_down"
+                android:gravity="right"
+                android:hint="请选择职务"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_x0.1"
+            android:background="@color/divine_line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.1"
+            android:gravity="center"
+            android:minHeight="@dimen/space_x5"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x2"
+                android:text="学院" />
+
+            <TextView
+                android:id="@+id/tv_dept"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawablePadding="@dimen/space_x0.5"
+                android:drawableRight="@mipmap/ic_arrow_down"
+                android:gravity="right"
+                android:hint="请选择学院"
+                android:textSize="@dimen/ts_medium" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,22 +2,31 @@ package com.mayi.yun.teachsystem.ui.home;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseFragment;
 import com.mayi.yun.teachsystem.bean.BannerVo;
+import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.network.GlideImageLoader;
+import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
+import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
+import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
+import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
+import com.mayi.yun.teachsystem.ui.leave.teacher.LeaveListActivity;
+import com.mayi.yun.teachsystem.utils.Constant;
+import com.mayi.yun.teachsystem.utils.DateUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View, OnBannerListener {
@@ -26,7 +35,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
      */
     @BindView(R.id.banner)
     Banner banner;
-    Unbinder unbinder;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
+
     /**
      * 图片列表
      */
@@ -53,6 +65,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     protected void initView(View view) {
+        Date date = new Date();
+        String dateStr = DateUtil.getChinaFormatDate(date) + "  " + DateUtil.getWeekOfDate(date);
+        tvDate.setText(dateStr);
         titleList = new ArrayList<>();
         linkList = new ArrayList<>();
         banner.setOnBannerListener(this);
@@ -83,9 +98,45 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void OnBannerClick(int position) {
 
     }
+
     @OnClick(R.id.tv_course)
     public void course() {
         Intent intent = new Intent(getActivity(), CourseScheduleActivity.class);
         startActivity(intent);
     }
+
+
+    @OnClick(R.id.tv_info)
+    public void info() {
+        Intent intent = new Intent(getActivity(), ClassMemberInfoActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_attend)
+    public void attend() {
+        int type = UserMessage.getInstance().getUserType();
+        Intent intent = new Intent();
+        switch (type) {
+            case Constant.HEAD:
+                intent.setClass(getActivity(), AttentionActivityH.class);
+                break;
+            case Constant.TEACHER:
+                intent.setClass(getActivity(), AttentionActivityT.class);
+                break;
+            case Constant.STUDENT:
+                intent.setClass(getActivity(), AttentionActivityS.class);
+                break;
+        }
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_leave)
+    public void leave() {
+        Intent intent = new Intent(getActivity(), LeaveListActivity.class);
+        startActivity(intent);
+
+
+    }
+
+
 }

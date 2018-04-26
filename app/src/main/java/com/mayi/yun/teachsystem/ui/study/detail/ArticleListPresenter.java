@@ -4,7 +4,6 @@ package com.mayi.yun.teachsystem.ui.study.detail;
 import com.mayi.yun.teachsystem.base.BasePresenter;
 import com.mayi.yun.teachsystem.bean.Article;
 import com.mayi.yun.teachsystem.bean.Result;
-import com.mayi.yun.teachsystem.network.ApiService;
 import com.mayi.yun.teachsystem.network.RetrofitManager;
 import com.mayi.yun.teachsystem.network.RxSchedulers;
 import com.mayi.yun.teachsystem.network.ThrowCustomer;
@@ -38,7 +37,7 @@ public class ArticleListPresenter extends BasePresenter<ArticleListContract.View
     @Override
     public void getKnowledgeSysArticle(int cid) {
         this.cid = cid;
-        RetrofitManager.create(ApiService.class, WeXinApiServer.HOST)
+        RetrofitManager.create(WeXinApiServer.class, WeXinApiServer.HOST)
                 .getKnowledgeSystemArticles(mPage, cid)
                 .compose(RxSchedulers.<Result<Article>>applySchedulers())
                 .compose(mView.<Result<Article>>bindToLife())

@@ -36,4 +36,21 @@ public class Constant {
      *常用网站
      */
     public static final int TAG_FRIEDND = 2;
+
+    /**选择照片来源*/
+    public static final int RESULT_IMAG =1;
+    public static final int RESULT_CAMERA = 10;
+
+    /**
+     * 班主任
+     */
+    public static final int HEAD = 1;
+    /**
+     * 老师
+     */
+    public static final int TEACHER = 2;
+    /**
+     * 学生
+     */
+    public static final int STUDENT = 3;
 }

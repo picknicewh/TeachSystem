@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/home_title"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_x0.1"
+        android:background="@drawable/round_orange_top"
+        android:gravity="center"
+        android:padding="@dimen/space_x1.5"
+        android:text="课程选择"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_large" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_x0.1"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="教室:" />
+
+        <EditText
+            android:id="@+id/tv_class"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="right"
+            android:hint="请输入教室"
+            android:padding="@dimen/space"
+            android:textSize="@dimen/ts_medium" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_x0.1"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerVertical="true"
+            android:text="老师:" />
+
+        <Spinner
+            android:id="@+id/sp_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_alignParentRight="true"
+            android:gravity="right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_x0.1"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="课程:" />
+
+        <Spinner
+            android:id="@+id/sp_course"
+            android:scrollbars="none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:textSize="@dimen/ts_xx_large">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="取消"
+            android:textColor="@color/colorPrimary" />
+
+        <View
+            android:layout_width="@dimen/space_x0.1"
+            android:layout_height="match_parent"
+            android:background="@color/divine_line_color" />
+
+        <Button
+            android:id="@+id/bt_conform"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="确认"
+            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
+</LinearLayout>

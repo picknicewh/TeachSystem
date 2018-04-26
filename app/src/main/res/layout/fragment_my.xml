@@ -125,6 +125,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space"
         android:orientation="horizontal"
@@ -140,6 +141,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space"
         android:orientation="horizontal"
@@ -156,6 +158,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_exit"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space"
         android:orientation="horizontal"
