@@ -1,5 +1,6 @@
 package com.mayi.yun.teachsystem.ui.classinfo;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,9 @@ import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.network.GlideUtils;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +27,10 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
 
     private OnItemClickListener onItemClickListener;
    private List<UserInfo> userInfoList;
-    public ClassMemberAdapter(List<UserInfo> userInfoList) {
+   private Context context;
+    public ClassMemberAdapter(List<UserInfo> userInfoList, Context context) {
       this.userInfoList = userInfoList;
+      this.context = context;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
     public void onBindViewHolder(ClassMemberAdapter.ViewHolder holder, final int position) {
          UserInfo userInfo = userInfoList.get(position);
          holder.tvName.setText(userInfo.getTruename());
-         holder.ivImage.setImageResource(getList().get(position));
+         GlideUtils.loadImageView(context,userInfo.getAvatar(),holder.ivImage);
          holder.tvNumber.setText(userInfo.getUserSn());
          holder.tvPosition.setText(userInfo.getPosition());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -51,17 +54,6 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
                 }
             }
         });
-    }
-    private List<Integer> getList() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.mipmap.ic_person);
-        list.add(R.mipmap.image1);
-        list.add(R.mipmap.image2);
-        list.add(R.mipmap.image3);
-        list.add(R.mipmap.image4);
-        list.add(R.mipmap.image5);
-        list.add(R.mipmap.image6);
-        return list;
     }
 
     @Override

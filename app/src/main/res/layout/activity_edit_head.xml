@@ -11,25 +11,6 @@
         android:background="@drawable/round_grey_bg"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_head"
-            android:layout_width="@dimen/space_x8"
-            android:layout_height="@dimen/space_x8"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/space"
-            android:src="@mipmap/ic_person" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/space"
-            android:text="设置头像" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_x0.1"
-            android:background="@color/divine_line_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_x2"
-                android:text="号码：" />
+                android:text="工号：" />
 
             <EditText
 
@@ -81,38 +62,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:hint="请输入名字"
+                android:hint="请输工号"
                 android:textSize="@dimen/ts_medium" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_x0.1"
             android:background="@color/divine_line_color" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_x0.1"
-            android:gravity="center"
-            android:minHeight="@dimen/space_x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/space">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_x2"
-                android:text="学号：" />
-
-            <EditText
-
-                android:id="@+id/tv_user_sn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint="请输入学号"
-                android:textSize="@dimen/ts_medium" />
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_x0.1"
@@ -130,53 +88,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_x2"
-                android:text="角色：" />
-
-            <RadioGroup
-                android:id="@+id/rg_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rb_student"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/space"
-                    android:checked="true"
-                    android:text="学生" />
-
-                <RadioButton
-                    android:id="@+id/rb_teacher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="老师" />
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_x0.1"
-            android:background="@color/divine_line_color" />
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_x0.1"
-            android:minHeight="@dimen/space_x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/space">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_x2"
+                android:layout_gravity="center"
                 android:text="性别：" />
 
             <RadioGroup
-                android:id="@+id/rg_sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -190,7 +105,7 @@
                     android:text="男" />
 
                 <RadioButton
-                    android:id="@+id/rb_feman"
+                    android:id="@+id/rv_feman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="女" />
@@ -264,42 +179,6 @@
                 android:hint="请选择班级"
                 android:textSize="@dimen/ts_medium" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_x0.1"
-            android:background="@color/divine_line_color" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_x0.1"
-            android:gravity="center"
-            android:minHeight="@dimen/space_x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/space">
-
-            <TextView
-                android:id="@+id/tv_position_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_x2"
-                android:text="职务" />
-
-            <TextView
-                android:id="@+id/tv_position"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:drawablePadding="@dimen/space_x0.5"
-                android:drawableRight="@mipmap/ic_arrow_down"
-                android:gravity="right"
-                android:hint="请选择职务"
-                android:textSize="@dimen/ts_medium" />
-        </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.study.detail.StudySysDetailActivity"
             android:screenOrientation="portrait" />
@@ -102,8 +102,11 @@
         <activity
             android:name=".ui.leave.teacher.LeaveDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.password.PasswordActivity"
+        <activity
+            android:name=".ui.password.PasswordActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.head.EditHeadActivity" />
+        <activity android:name=".ui.head.HeadListActivity" />
     </application>
 
 </manifest>

@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.db.UserMessage;
+import com.mayi.yun.teachsystem.network.GlideUtils;
+import com.mayi.yun.teachsystem.utils.G;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,6 +42,7 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
     TextView tvPosition;
     @BindView(R.id.tv_dept)
     TextView tvDept;
+    private UserInfo userInfo;
 
     @Override
     public void initInjector() {
@@ -52,9 +56,17 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
 
     @Override
     public void initView() {
-     setTitleText("信息详情");
-     if (UserMessage.getInstance().getUserType()==1){
-         setSubTitleText("完成");
-     }
+        setTitleText("信息详情");
+        if (UserMessage.getInstance().getUserType() == 1) {
+            setSubTitleText("完成");
+        }
+        userInfo = getIntent().getParcelableExtra("userInfo");
+        tvName.setText(userInfo.getTruename());
+        tvPhone.setText(userInfo.getPhone());
+        tvBirthday.setText(userInfo.getBirthday());
+        tvPosition.setText(G.isEmteny(userInfo.getPosition()) ? "无" : userInfo.getPosition());
+        GlideUtils.loadImageView(this, userInfo.getAvatar(), ivHead);
+
+
     }
 }

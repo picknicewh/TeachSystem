@@ -18,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPresenter> implements View.OnClickListener, OnItemClickListener {
+public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPresenter> implements View.OnClickListener, OnItemClickListener, ClassMemberInfoContract.View {
 
     /**
      * 班级信息
@@ -56,15 +56,17 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
         if (UserMessage.getInstance().getUserType() == 1) {
             setSubTitleText("添加");
         }
-
         setSubtitleClickListener(this);
-        adapter = new ClassMemberAdapter(userInfoList);
+        adapter = new ClassMemberAdapter(userInfoList, this);
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
         rvClassInfo.setLayoutManager(new LinearLayoutManager(this));
         rvClassInfo.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+        if (mPresenter != null) {
+            mPresenter.getUserByClassId();
+        }
     }
 
     @Override
@@ -76,6 +78,30 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
     @Override
     public void onClick(View view, int position) {
         Intent intent = new Intent(this, EditMemberActivity.class);
+        intent.putExtra("userInfo",  userInfoList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public String getUserType() {
+        return String.valueOf(UserMessage.getInstance().getUserType());
+    }
+
+    @Override
+    public String getClassId() {
+        return String.valueOf(UserMessage.getInstance().getClassId());
+    }
+
+    @Override
+    public void setUserInfoList(List<UserInfo> userInfoList) {
+        this.userInfoList.clear();
+        this.userInfoList.addAll(userInfoList);
+        tvCount.setText(String.valueOf(userInfoList.size())+"人");
+        if (userInfoList.size()>0){
+           // tvClass.setText(userInfoList.get(0).getClassName());
+        }
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.mayi.yun.teachsystem.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者： wh
  * 时间：  2018/4/24
@@ -8,7 +11,7 @@ package com.mayi.yun.teachsystem.bean;
  * 附加注释：
  * 主要接口：
  */
-public class UserInfo {
+public class UserInfo implements Parcelable {
     /**
      * 用户id
      */
@@ -22,7 +25,7 @@ public class UserInfo {
      */
     private int userType;
     /**
-     *手机号
+     * 手机号
      */
     private String phone;
     /**
@@ -38,11 +41,11 @@ public class UserInfo {
      */
     private String avatar;
     /**
-     *性别
+     * 性别
      */
     private int sex;
     /**
-     *生日
+     * 生日
      */
     private String birthday;
     /**
@@ -54,6 +57,38 @@ public class UserInfo {
      */
     private String className;
     private String position;
+
+    public UserInfo() {
+
+    }
+
+    protected UserInfo(Parcel in) {
+        userId = in.readInt();
+        userSn = in.readString();
+        userType = in.readInt();
+        phone = in.readString();
+        nickname = in.readString();
+        truename = in.readString();
+        avatar = in.readString();
+        sex = in.readInt();
+        birthday = in.readString();
+        classId = in.readInt();
+        className = in.readString();
+        position = in.readString();
+    }
+
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel in) {
+            return new UserInfo(in);
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
+
     public int getUserId() {
         return userId;
     }
@@ -148,5 +183,26 @@ public class UserInfo {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(userId);
+        parcel.writeString(userSn);
+        parcel.writeInt(userType);
+        parcel.writeString(phone);
+        parcel.writeString(nickname);
+        parcel.writeString(truename);
+        parcel.writeString(avatar);
+        parcel.writeInt(sex);
+        parcel.writeString(birthday);
+        parcel.writeInt(classId);
+        parcel.writeString(className);
+        parcel.writeString(position);
     }
 }

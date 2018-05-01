@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * 附加注释：
  * 主要接口：
  */
-public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> extends BaseActivity implements BaseContract.BaseView {
+public abstract class BaseClassActivity<T extends BaseContract.BasePresenter> extends BaseActivity implements BaseContract.BaseView {
     @Nullable
     @Inject
     protected T mPresenter;
@@ -88,6 +88,10 @@ public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> 
         });
     }
 
+    public void setLeftGone() {
+        ivLeft.setVisibility(View.GONE);
+    }
+
     @Override
     public <T> LifecycleTransformer<T> bindToLife() {
         return this.bindToLifecycle();
@@ -112,9 +116,11 @@ public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> 
             mPresenter.detachView();
         }
     }
-    public void setLeftIconGone(){
+
+    public void setLeftIconGone() {
         ivLeft.setVisibility(View.GONE);
     }
+
     /**
      * 设置左图标
      *
@@ -143,6 +149,7 @@ public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> 
 
         tvSubtitle.setText(getResources().getText(textId));
     }
+
     /**
      * 设置左文字
      *
@@ -152,6 +159,7 @@ public abstract   class BaseClassActivity<T extends BaseContract.BasePresenter> 
 
         tvSubtitle.setText(text);
     }
+
     /**
      * 设置右图标
      *

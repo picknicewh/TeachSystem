@@ -9,6 +9,7 @@ import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.db.UserAction;
 import com.mayi.yun.teachsystem.db.UserMessage;
+import com.mayi.yun.teachsystem.ui.head.HeadListActivity;
 import com.mayi.yun.teachsystem.ui.password.PasswordActivity;
 import com.mayi.yun.teachsystem.utils.G;
 import com.mayi.yun.teachsystem.utils.NetworkUtil;
@@ -60,7 +61,6 @@ public class LoginActivity extends BaseClassActivity<LoginPresenter> implements 
         } else {
             G.showToast(this, "请连接网络..");
         }
-
         if (mPresenter != null) {
             mPresenter.login();
         }
@@ -80,8 +80,14 @@ public class LoginActivity extends BaseClassActivity<LoginPresenter> implements 
     public void setUseInfo(UserInfo useInfo) {
         UserAction.saveLoginInfo(useInfo);
         UserAction.saveLoginMessage(usename, password);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (UserMessage.getInstance().getUserType()==4){
+            Intent intent = new Intent(this, HeadListActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
 

@@ -16,6 +16,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.DataUtil;
 import com.mayi.yun.teachsystem.utils.DateUtil;
@@ -36,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.mayi.yun.teachsystem.utils.PermissionsChecker.REQUEST_CODE;
 
-public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> implements AddMemberContract.View, RadioGroup.OnCheckedChangeListener {
+public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> implements AddMemberContract.View, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     /**
      * 头像
@@ -66,16 +67,13 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     /**
      * 性别女
      */
-    @BindView(R.id.rv_feman)
+    @BindView(R.id.rb_feman)
     RadioButton rvFeman;
     /**
      * 班级信息
      */
     @BindView(R.id.tv_class)
     TextView tvClass;
-
-    @BindView(R.id.tv_dept)
-    TextView tvDept;
     /**
      * 角色
      */
@@ -101,6 +99,11 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
      */
     @BindView(R.id.tv_birthday)
     TextView tvBirthday;
+    @BindView(R.id.tv_user_sn)
+    EditText tvUserSn;
+
+    @BindView(R.id.rg_sex)
+    RadioGroup rgSex;
     /**
      * 选项
      */
@@ -133,7 +136,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     /**
      * 图片地址
      */
-    private String imageUrl;
+    private String imageUrl = "";
     /**
      * 记录选中开始日期
      */
@@ -161,8 +164,9 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     public void initView() {
         setTitleTextId(R.string.add_member);
         setSubTitleText("完成");
+        setSubtitleClickListener(this);
         dialog = new PictureChooseDialog(this);
-        rgRole.setOnCheckedChangeListener(this);
+
         positionList = DataUtil.getPositionList();
         courseList = new ArrayList<>();
         optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
@@ -172,6 +176,8 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         tvBirthday.setText(date);
         mCalendar.setTime(mDate);//默认日期选中的开始时间
         mTimePickerView = DateUtil.getDatePickerView("选择生日时间", this, mCalendar, TimeListener);
+
+
     }
 
     private TimePickerView.OnTimeSelectListener TimeListener = new TimePickerView.OnTimeSelectListener() {
@@ -191,13 +197,13 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
                 optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
                 tvPositionText.setText("职务");
                 tvPosition.setText("请选择职务");
-                role = 0;
+                role = 3;
                 break;
             case R.id.rb_teacher:
                 optionsPickerView = DateUtil.getOptionPickerView("请选择授课", courseList, position, this, optionsSelectListener);
                 tvPositionText.setText("授课");
                 tvPosition.setText("请选择授课");
-                role = 1;
+                role = 2;
                 break;
         }
     }
@@ -272,4 +278,59 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         intent.setData(uri);
     }
 
+    @Override
+    public int getUserType() {
+        return role;
+    }
+
+    @Override
+    public String getClassId() {
+        return String.valueOf(UserMessage.getInstance().getClassId());
+    }
+
+    @Override
+    public String getUserSn() {
+        return tvUserSn.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return tvPhone.getText().toString();
+    }
+
+    @Override
+    public String getTrueName() {
+        return tvName.getText().toString();
+    }
+
+    @Override
+    public String getAvatar() {
+        return imageUrl;
+    }
+
+    @Override
+    public int getSex() {
+        return rbMen.isChecked() ? 1 : 0;
+    }
+
+    @Override
+    public String getPosition() {
+        return tvPosition.getText().toString();
+    }
+
+    @Override
+    public String getBirthday() {
+        return tvBirthday.getText().toString();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (G.isEmteny(getTrueName()) ||G.isEmteny(getBirthday()) || G.isEmteny(getPosition()) || G.isEmteny(getPhone())){
+            G.showToast(this,"必要条件不能为空！");
+            return;
+        }
+        if (mPresenter!=null){
+            mPresenter.addMember();
+        }
+    }
 }

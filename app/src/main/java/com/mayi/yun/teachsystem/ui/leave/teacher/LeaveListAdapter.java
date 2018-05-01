@@ -55,13 +55,12 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
             holder.tv_name.setVisibility(View.VISIBLE);
             holder.tv_name_text.setVisibility(View.VISIBLE);
         }
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
                 if (onItemClickListener != null) {
                     onItemClickListener.onClick(view, position);
                 }
-                return false;
             }
         });
 

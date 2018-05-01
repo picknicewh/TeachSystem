@@ -67,7 +67,6 @@ public class ArticleListFragment extends BaseFragment<ArticleListPresenter> impl
         articleAdapter.setOnLoadMoreListener(this, rvArticle);
         articleAdapter.setOnItemClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
-
         mPresenter.getKnowledgeSysArticle(cid);
     }
 

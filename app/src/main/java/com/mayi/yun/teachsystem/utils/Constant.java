@@ -53,4 +53,16 @@ public class Constant {
      * 学生
      */
     public static final int STUDENT = 3;
+    /**
+     * 管理员
+     */
+    public static final int ADMI = 4;
+
+
+
+
+    public static final int EDIT = 1;
+
+    public static final int ADD = 2;
+
 }
