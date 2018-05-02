@@ -107,6 +107,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.head.EditHeadActivity" />
         <activity android:name=".ui.head.HeadListActivity" />
+        <activity android:name=".ui.classinfo.ClassListActivity"></activity>
     </application>
 
 </manifest>

@@ -10,7 +10,6 @@ import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.db.UserMessage;
-import com.mayi.yun.teachsystem.utils.G;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
     public void initView() {
         setTitleTextId(R.string.member);
         userInfoList = new ArrayList<>();
-        userInfoList = G.getUserInfoList();
         if (UserMessage.getInstance().getUserType() == 1) {
             setSubTitleText("添加");
         }
@@ -78,27 +76,35 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
     @Override
     public void onClick(View view, int position) {
         Intent intent = new Intent(this, EditMemberActivity.class);
-        intent.putExtra("userInfo",  userInfoList.get(position));
+        intent.putExtra("userInfo", userInfoList.get(position));
         startActivity(intent);
     }
 
     @Override
     public String getUserType() {
-        return String.valueOf(UserMessage.getInstance().getUserType());
+        return "3";
     }
 
     @Override
     public String getClassId() {
-        return String.valueOf(UserMessage.getInstance().getClassId());
+        String classId;
+        if (UserMessage.getInstance().getUserType() == 2) {
+            classId = getIntent().getStringExtra("classId");
+
+
+        } else {
+            classId = String.valueOf(UserMessage.getInstance().getClassId());
+        }
+        return classId;
     }
 
     @Override
     public void setUserInfoList(List<UserInfo> userInfoList) {
         this.userInfoList.clear();
         this.userInfoList.addAll(userInfoList);
-        tvCount.setText(String.valueOf(userInfoList.size())+"人");
-        if (userInfoList.size()>0){
-           // tvClass.setText(userInfoList.get(0).getClassName());
+        tvCount.setText(String.valueOf(userInfoList.size()) + "人");
+        if (userInfoList.size() > 0) {
+            //
         }
         if (adapter != null) {
             adapter.notifyDataSetChanged();

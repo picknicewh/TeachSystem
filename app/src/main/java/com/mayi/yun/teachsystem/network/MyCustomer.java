@@ -26,7 +26,11 @@ public class MyCustomer<T> implements Consumer<T> {
             Common common  = (Common) t;
             if (common.getCode()!=200){
                 callBack.getErrorMessage(common.getDesc());
+
             }else {
+                if (common.getData() instanceof  String){
+                    callBack.setResult(common.getDesc());
+                }
                 callBack.setResult(common.getData());
             }
         }

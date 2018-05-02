@@ -1,8 +1,8 @@
-package com.mayi.yun.teachsystem.ui.attend.teacher;
+package com.mayi.yun.teachsystem.ui.classinfo;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
-import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.bean.ClassVo;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public interface AttentionContractT {
+public interface ClassListContract {
     interface View extends BaseContract.BaseView {
-        String getUserType();
-        String getClassId();
-        void setUserInfoList(List<UserInfo> userInfoList);
+        String getTeacherId();
+        void setClassList(List<ClassVo> classList);
     }
+
     interface Presenter extends BaseContract.BasePresenter<View> {
-        void getUserByClassId();
+        void getClassList();
     }
 }

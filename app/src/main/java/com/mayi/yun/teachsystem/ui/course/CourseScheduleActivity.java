@@ -7,8 +7,11 @@ import android.widget.AdapterView;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.bean.CourseVo;
+import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.DateUtil;
+import com.mayi.yun.teachsystem.utils.G;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 import com.mayi.yun.teachsystem.widget.CourseChooseDialog;
 import com.mayi.yun.teachsystem.widget.MyGridView;
@@ -48,16 +51,31 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
      * 课程适配器
      */
     private CourseScheduleAdapter courseAdapter;
-
-    /**
-     * 位置
-     */
-    private int position = 0;
     /**
      * 点击课程的位置
      */
     private int clickPosition = 0;
     private CourseChooseDialog dialog;
+    /**
+     * 教师名称
+     */
+    private String classRoom = "";
+    /**
+     * 老师id
+     */
+    private String teacherId = "";
+    /**
+     * 老师名字
+     */
+    private String teacherName = "";
+    /**
+     * 课程名称
+     */
+    private String schedule = "";
+    /**
+     * 课程列表
+     */
+    private List<CourseVo> courseVoList;
 
     @Override
     public int getLayoutId() {
@@ -69,12 +87,13 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         setTitleTextId(R.string.course);
         setSubTitleText(DateUtil.getFormatDate(new Date()));
         init();
+        userInfoList = new ArrayList<>();
         adapter = new WeekAdapter(this, dateList);
         rvWeek.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvWeek.setAdapter(adapter);
-
         adapter.initData(DateUtil.getWeekOfPosition());
         adapter.setOnItemClickListener(this);
+        courseVoList = new ArrayList<>();
         courseAdapter = new CourseScheduleAdapter(this, courseList);
         gvCourse.setAdapter(courseAdapter);
         gvCourse.setOnItemClickListener(this);
@@ -82,6 +101,10 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         dialog = new CourseChooseDialog(this);
         dialog.setOnConformCallBack(this);
 
+        if (mPresenter != null) {
+            mPresenter.getUserByClassId();
+            mPresenter.getScheduleList();
+        }
 
     }
 
@@ -90,11 +113,7 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         courseList = new ArrayList<>();
         dateList = DateUtil.getWeekdays();
         for (int i = 0; i < 28; i++) {
-            if (i % 6 == 0)
-                courseList.add("java程序设计与艺术");
-            else if (i % 3 == 0)
-                courseList.add("C程序程序设计");
-            else courseList.add("" + i);
+            courseList.add("");
         }
     }
 
@@ -114,20 +133,136 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         if (UserMessage.getInstance().getUserType() == 1) {
             this.clickPosition = position;
             dialog.show();
+            dialog.setUserInfoList(userInfoList);
         }
     }
 
     @Override
-    public void onCallBack(String room, String teacher, String course) {
+    public void onCallBack(String room, UserInfo userInfo) {
         /*course + "(" + teacher + ")" +*/
-        String info =  room;
-        courseList.set(clickPosition, info);
-        if (courseAdapter!=null){
-             courseAdapter.notifyDataSetChanged();
+        String info = room;
+        teacherId = String.valueOf(userInfo.getUserId());
+        teacherName = userInfo.getTruename();
+        schedule = userInfo.getPosition();
+        classRoom = room;
+        if (mPresenter != null) {
+            mPresenter.addSchedule();
         }
     }
 
-    private String[] courses = new String[]{
+    @Override
+    public String getClassId() {
+        return getIntent().getStringExtra("classId");
+    }
 
-    };
+    @Override
+    public String getClassName() {
+        return getIntent().getStringExtra("className");
+    }
+
+    @Override
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    @Override
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    @Override
+    public String getSchedule() {
+        return schedule;
+    }
+
+    @Override
+    public int getNumber() {
+        return getNumberData(clickPosition);
+    }
+
+    @Override
+    public int getWeek() {
+        return getWeekData(clickPosition);
+    }
+
+
+    @Override
+    public String getClassRoom() {
+        return classRoom;
+    }
+
+    @Override
+    public String getUserType() {
+        return "2";
+    }
+
+    private List<UserInfo> userInfoList;
+
+    @Override
+    public void setUserInfoList(List<UserInfo> userInfoList) {
+        this.userInfoList = userInfoList;
+
+
+    }
+
+    @Override
+    public void setCourseList(List<CourseVo> courseVoList) {
+        this.courseVoList.clear();
+        this.courseVoList.addAll(courseVoList);
+        for (int i = 0; i < courseVoList.size(); i++) {
+            CourseVo courseVo = courseVoList.get(i);
+            int weekday = courseVo.getWeekday();
+            int number = courseVo.getNumber();
+            int position = number * 7 + weekday - 8;
+            String info = courseVo.getClassName() + courseVo.getTeacherName() + courseVo.getClassroom() + "室";
+            courseList.set(position, info);
+        }
+        if (courseAdapter != null) {
+            courseAdapter.notifyDataSetChanged();
+        }
+
+
+    }
+
+    @Override
+    public void addSuccess() {
+        G.showToast(this,"添加成功！");
+        if (mPresenter != null) {
+            mPresenter.getScheduleList();
+        }
+    }
+
+    private int getWeekData(int clickPosition) {
+        int week = 1;
+        if (clickPosition == 0 || clickPosition == 7 || clickPosition == 14 || clickPosition == 21) {
+            week = 1;
+        } else if (clickPosition == 1 || clickPosition == 8 || clickPosition == 15 || clickPosition == 22) {
+            week = 2;
+        } else if (clickPosition == 2 || clickPosition == 9 || clickPosition == 16 || clickPosition == 23) {
+            week = 3;
+        } else if (clickPosition == 3 || clickPosition == 10 || clickPosition == 17 || clickPosition == 24) {
+            week = 4;
+        } else if (clickPosition == 4 || clickPosition == 11 || clickPosition == 18 || clickPosition == 25) {
+            week = 5;
+        } else if (clickPosition == 5 || clickPosition == 12 || clickPosition == 19 || clickPosition == 26) {
+            week = 6;
+        } else if (clickPosition == 6 || clickPosition == 13 || clickPosition == 20 || clickPosition == 27) {
+            week = 7;
+        }
+        return week;
+    }
+
+    private int getNumberData(int clickPosition) {
+        int number = 1;
+        if (clickPosition <= 6) {
+            number = 1;
+        } else if (clickPosition <= 13) {
+            number = 2;
+        } else if (clickPosition <= 20) {
+            number = 3;
+        } else if (clickPosition <= 27) {
+            number = 4;
+        }
+        return number;
+    }
 }

@@ -324,6 +324,11 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     }
 
     @Override
+    public void success() {
+        finish();
+    }
+
+    @Override
     public void onClick(View view) {
         if (G.isEmteny(getTrueName()) ||G.isEmteny(getBirthday()) || G.isEmteny(getPosition()) || G.isEmteny(getPhone())){
             G.showToast(this,"必要条件不能为空！");

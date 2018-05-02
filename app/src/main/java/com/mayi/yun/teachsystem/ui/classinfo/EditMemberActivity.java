@@ -1,5 +1,7 @@
 package com.mayi.yun.teachsystem.ui.classinfo;
 
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,6 +28,8 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
     RadioButton rbStudent;
     @BindView(R.id.rb_teacher)
     RadioButton rbTeacher;
+    @BindView(R.id.ll_role)
+    LinearLayout llRole;
     @BindView(R.id.rg_role)
     RadioGroup rgRole;
     @BindView(R.id.rb_men)
@@ -59,6 +63,8 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
         setTitleText("信息详情");
         if (UserMessage.getInstance().getUserType() == 1) {
             setSubTitleText("完成");
+        }else {
+            llRole.setVisibility(View.GONE);
         }
         userInfo = getIntent().getParcelableExtra("userInfo");
         tvName.setText(userInfo.getTruename());
@@ -66,7 +72,13 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
         tvBirthday.setText(userInfo.getBirthday());
         tvPosition.setText(G.isEmteny(userInfo.getPosition()) ? "无" : userInfo.getPosition());
         GlideUtils.loadImageView(this, userInfo.getAvatar(), ivHead);
-
+        if (userInfo.getSex()==1){
+            rbMen.setVisibility(View.VISIBLE);
+            rvFeman.setVisibility(View.GONE);
+        }else {
+            rbMen.setVisibility(View.GONE);
+            rvFeman.setVisibility(View.VISIBLE);
+        }
 
     }
 }

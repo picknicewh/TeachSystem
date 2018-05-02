@@ -10,6 +10,7 @@ import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
 import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
 import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
 import com.mayi.yun.teachsystem.ui.classinfo.AddMemberActivity;
+import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
 import com.mayi.yun.teachsystem.ui.leave.student.LeaveAskActivity;
@@ -56,5 +57,7 @@ public interface ActivityComponent {
     void inject(AddMemberActivity addMemberActivity);
 
     void inject(LoginActivity loginActivity);
+
+    void inject(ClassListActivity classListActivity);
 
 }

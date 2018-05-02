@@ -1,8 +1,10 @@
 package com.mayi.yun.teachsystem.network;
 
 
+import com.mayi.yun.teachsystem.bean.ClassVo;
 import com.mayi.yun.teachsystem.bean.Common;
 import com.mayi.yun.teachsystem.bean.Common2;
+import com.mayi.yun.teachsystem.bean.CourseVo;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 
 import java.util.List;
@@ -47,5 +49,26 @@ public interface ApiService {
     @POST("member/add")
     @FormUrlEncoded
     Observable<Common<String>> addMember(@FieldMap Map<String,Object> params);
+
+    /**
+     * 查看所有的班级列表
+     */
+    @POST("member/selectClassList")
+    @FormUrlEncoded
+    Observable<Common<List<ClassVo>>> getClassList(@Field("teacherId") String teacherId);
+
+    /**
+     *添加或修改课表
+     */
+    @POST("member/addSchedule")
+    @FormUrlEncoded
+    Observable<Common<String>> addSchedule(@FieldMap Map<String,Object> params);
+
+    /**
+     *添加或修改课表
+     */
+    @POST("member/selectScheduleList")
+    @FormUrlEncoded
+    Observable<Common<List<CourseVo>>> getScheduleList(@Field("classId") String classId);
 
 }

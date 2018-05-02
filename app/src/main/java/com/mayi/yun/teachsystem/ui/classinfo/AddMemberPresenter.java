@@ -3,16 +3,14 @@ package com.mayi.yun.teachsystem.ui.classinfo;
 import com.mayi.yun.teachsystem.base.BasePresenter;
 import com.mayi.yun.teachsystem.bean.Common;
 import com.mayi.yun.teachsystem.network.ApiService;
+import com.mayi.yun.teachsystem.network.MyCustomer;
 import com.mayi.yun.teachsystem.network.RetrofitManager;
 import com.mayi.yun.teachsystem.network.RxSchedulers;
-import com.mayi.yun.teachsystem.network.ThrowCustomer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * 作者： wh
@@ -46,17 +44,18 @@ public class AddMemberPresenter extends BasePresenter<AddMemberContract.View> im
                 .addMember(params)
                 .compose(RxSchedulers.<Common<String>>applySchedulers())
                 .compose(mView.<Common>bindToLife())
-                .subscribe(new Consumer<Common>() {
-                    @Override
-                    public void accept(Common common) throws Exception {
-
-
-                    }
-                }, new ThrowCustomer(new ThrowCustomer.CallBack() {
+                .subscribe(new MyCustomer<Common>(new MyCustomer.CallBack() {
                     @Override
                     public void getErrorMessage(String message) {
                         mView.showMessage(message);
                         mView.hideProgress();
+                    }
+
+                    @Override
+                    public void setResult(Object t) {
+                          String result = (String) t;
+                         mView.showMessage(result);
+                         mView.hideProgress();
                     }
                 }));
     }

@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.utils.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,7 +23,7 @@ import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
 import me.yuqirong.cardswipelayout.CardLayoutManager;
 import me.yuqirong.cardswipelayout.OnSwipeListener;
 
-public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> implements OnSwipeListener<Integer> {
+public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> implements OnSwipeListener<UserInfo>, AttentionContractT.View {
 
 
     @BindView(R.id.tv_class)
@@ -39,8 +42,8 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     TextView ivUnAttend;
     @BindView(R.id.ll_nodata)
     LinearLayout llNodata;
-    private List<Integer> list = new ArrayList<>();
     private AttentionAdapterT attentionAdapterT;
+    private List<UserInfo> userInfoList;
 
     @Override
     public void initInjector() {
@@ -55,30 +58,29 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     @Override
     public void initView() {
         setTitleTextId(R.string.attend_p);
-        initData();
         initViews();
+        String className = getIntent().getStringExtra("className");
+        tvClass.setText(className);
+        Date date = new Date();
+        tvDate.setText(DateUtil.getFormatDate(date));
+        tvWeek.setText(DateUtil.getWeekOfDate(date));
     }
 
-    private void initData() {
-        list.add(R.mipmap.ic_person);
-        list.add(R.mipmap.image1);
-        list.add(R.mipmap.image2);
-        list.add(R.mipmap.image3);
-        list.add(R.mipmap.image4);
-        list.add(R.mipmap.image5);
-        list.add(R.mipmap.image6);
-    }
 
     private void initViews() {
-        attentionAdapterT = new AttentionAdapterT(list);
+        userInfoList = new ArrayList<>();
+        attentionAdapterT = new AttentionAdapterT(userInfoList, this);
         rvMember.setItemAnimator(new DefaultItemAnimator());
         rvMember.setAdapter(attentionAdapterT);
-        CardItemTouchHelperCallback<Integer> cardCallback = new CardItemTouchHelperCallback<>(rvMember.getAdapter(), list);
+        CardItemTouchHelperCallback<UserInfo> cardCallback = new CardItemTouchHelperCallback<>(rvMember.getAdapter(), userInfoList);
         cardCallback.setOnSwipedListener(this);
         final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
         final CardLayoutManager cardLayoutManager = new CardLayoutManager(rvMember, touchHelper);
         rvMember.setLayoutManager(cardLayoutManager);
         touchHelper.attachToRecyclerView(rvMember);
+        if (mPresenter != null) {
+            mPresenter.getUserByClassId();
+        }
     }
 
     @Override
@@ -100,7 +102,7 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, Integer integer, int direction) {
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, UserInfo userInfo, int direction) {
         AttentionAdapterT.ViewHolder holder = (AttentionAdapterT.ViewHolder) viewHolder;
         viewHolder.itemView.setAlpha(1f);
         holder.dislikeImageView.setAlpha(0f);
@@ -121,9 +123,30 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     public void nodata() {
         rvMember.setVisibility(View.VISIBLE);
         llNodata.setVisibility(View.GONE);
-        initData();
-        rvMember.getAdapter().notifyDataSetChanged();
+        if (mPresenter != null) {
+            mPresenter.getUserByClassId();
+        }
     }
 
 
+    @Override
+    public String getUserType() {
+        return "3";
+    }
+
+    @Override
+    public String getClassId() {
+        return getIntent().getStringExtra("classId");
+    }
+
+    @Override
+    public void setUserInfoList(List<UserInfo> userInfoList) {
+        String data = "总人数:"+userInfoList.size()+"人";
+        tvNumber.setText(data);
+        this.userInfoList.clear();
+        this.userInfoList.addAll(userInfoList);
+        if (attentionAdapterT != null) {
+            attentionAdapterT.notifyDataSetChanged();
+        }
+    }
 }

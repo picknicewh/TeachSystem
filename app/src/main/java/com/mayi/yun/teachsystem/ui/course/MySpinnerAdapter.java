@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
+import com.mayi.yun.teachsystem.bean.UserInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,26 +21,22 @@ import java.util.List;
  * 主要接口：
  */
 public class MySpinnerAdapter extends BaseAdapter {
-    List<String> dataList = new ArrayList<>();
     private Context mContext;
+    private List<UserInfo> userInfoList;
 
-    public MySpinnerAdapter(Context context) {
+    public MySpinnerAdapter(Context context, List<UserInfo> userInfoList) {
         this.mContext = context;
-    }
-
-    public void setDatas(List<String> dataList) {
-        this.dataList = dataList;
-        notifyDataSetChanged();
+        this.userInfoList = userInfoList;
     }
 
     @Override
     public int getCount() {
-        return dataList == null ? 0 : dataList.size();
+        return userInfoList == null ? 0 : userInfoList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return dataList == null ? null : dataList.get(position);
+        return userInfoList == null ? null : userInfoList.get(position);
     }
 
     @Override
@@ -57,7 +53,7 @@ public class MySpinnerAdapter extends BaseAdapter {
         } else {
             hodler = (ViewHolder) convertView.getTag();
         }
-        hodler.mTextView.setText(dataList.get(position));
+        hodler.mTextView.setText(userInfoList.get(position).getTruename());
         return convertView;
     }
 

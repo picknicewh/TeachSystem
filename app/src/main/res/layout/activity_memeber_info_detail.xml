@@ -86,6 +86,7 @@
             android:background="@color/divine_line_color" />
 
         <LinearLayout
+            android:id="@+id/ll_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_x0.1"
@@ -98,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_x2"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:text="角色：" />
 
             <RadioGroup
@@ -133,6 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_x0.1"
             android:minHeight="@dimen/space_x5"
+
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/space">
 

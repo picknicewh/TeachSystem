@@ -11,10 +11,11 @@ import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.network.GlideImageLoader;
 import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
 import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
-import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
+import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
 import com.mayi.yun.teachsystem.ui.leave.teacher.LeaveListActivity;
+import com.mayi.yun.teachsystem.ui.study.detail.ArticleContentActivity;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.DateUtil;
 import com.youth.banner.Banner;
@@ -96,19 +97,34 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void OnBannerClick(int position) {
-
+         Intent intent = new Intent(getActivity(), ArticleContentActivity.class);
+         intent.putExtra("link",linkList.get(position));
+         intent.putExtra("title",titleList.get(position));
+         startActivity(intent);
     }
 
     @OnClick(R.id.tv_course)
     public void course() {
-        Intent intent = new Intent(getActivity(), CourseScheduleActivity.class);
+        Intent intent = new Intent();
+        if (UserMessage.getInstance().getUserType()!=3){
+            intent.setClass(getActivity(),ClassListActivity.class);
+            intent.putExtra("source",Constant.SOURCE_COURSE);
+        }else {
+            intent.setClass(getActivity(),CourseScheduleActivity.class);
+        }
         startActivity(intent);
     }
 
 
     @OnClick(R.id.tv_info)
     public void info() {
-        Intent intent = new Intent(getActivity(), ClassMemberInfoActivity.class);
+        Intent intent = new Intent();
+        if (UserMessage.getInstance().getUserType()!=3){
+            intent.setClass(getActivity(),ClassListActivity.class);
+            intent.putExtra("source",Constant.SOURCE_MEMBER);
+        }else {
+            intent.setClass(getActivity(),ClassMemberInfoActivity.class);
+        }
         startActivity(intent);
     }
 
@@ -121,7 +137,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 intent.setClass(getActivity(), AttentionActivityH.class);
                 break;
             case Constant.TEACHER:
-                intent.setClass(getActivity(), AttentionActivityT.class);
+                intent.setClass(getActivity(), ClassListActivity.class);
+                intent.putExtra("source",Constant.SOURCE_ATTEBD);
                 break;
             case Constant.STUDENT:
                 intent.setClass(getActivity(), AttentionActivityS.class);
@@ -134,9 +151,5 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void leave() {
         Intent intent = new Intent(getActivity(), LeaveListActivity.class);
         startActivity(intent);
-
-
     }
-
-
 }

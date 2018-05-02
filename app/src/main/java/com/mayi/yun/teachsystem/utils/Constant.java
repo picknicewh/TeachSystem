@@ -58,11 +58,28 @@ public class Constant {
      */
     public static final int ADMI = 4;
 
-
-
-
+    /**
+     * 编辑
+     */
     public static final int EDIT = 1;
-
+    /**
+     * 添加
+     */
     public static final int ADD = 2;
+
+    /**
+     * 进入学生列表来源----学生信息按钮
+     */
+    public static final int SOURCE_MEMBER = 1;
+
+    /**
+     * 进入学生列表来源----考勤按钮
+     */
+    public static final int SOURCE_ATTEBD = 2;
+
+    /**
+     * 进入学生列表来源----课程表按钮
+     */
+    public static final int SOURCE_COURSE = 3;
 
 }

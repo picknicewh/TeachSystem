@@ -1,5 +1,6 @@
 package com.mayi.yun.teachsystem.ui.attend.teacher;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
+import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.network.GlideUtils;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
 import java.util.List;
@@ -23,10 +26,12 @@ import java.util.List;
 public class AttentionAdapterT extends RecyclerView.Adapter<AttentionAdapterT.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private List<Integer> list;
+    private List<UserInfo> userInfoList;
+    private Context context;
 
-    public AttentionAdapterT(List<Integer> list) {
-      this.list = list;
+    public AttentionAdapterT(List<UserInfo> userInfoList, Context context) {
+        this.userInfoList = userInfoList;
+        this.context = context;
     }
 
     @Override
@@ -37,7 +42,11 @@ public class AttentionAdapterT extends RecyclerView.Adapter<AttentionAdapterT.Vi
 
     @Override
     public void onBindViewHolder(AttentionAdapterT.ViewHolder holder, final int position) {
-        holder.ivImage.setImageResource(list.get(position));
+        UserInfo userInfo = userInfoList.get(position);
+        holder.tvName.setText(userInfo.getTruename());
+        holder.tvNumber.setText(userInfo.getUserSn());
+        holder.tvPosition.setText(userInfo.getPosition());
+        GlideUtils.loadImageView(context,userInfo.getAvatar(),holder.ivImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +59,7 @@ public class AttentionAdapterT extends RecyclerView.Adapter<AttentionAdapterT.Vi
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return userInfoList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

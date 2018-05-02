@@ -8,8 +8,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
+import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.ui.course.MySpinnerAdapter;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import butterknife.OnClick;
  * 附加注释：
  * 主要接口：
  */
-public class CourseChooseDialog extends AlertDialog {
+public class CourseChooseDialog extends AlertDialog implements AdapterView.OnItemSelectedListener {
     /**
      * 教室
      */
@@ -41,8 +43,8 @@ public class CourseChooseDialog extends AlertDialog {
     /**
      * 课程名称
      */
-    @BindView(R.id.sp_course)
-    Spinner spCourse;
+    @BindView(R.id.tv_course)
+    TextView tvCourse;
     /**
      * 上线文本
      */
@@ -52,23 +54,12 @@ public class CourseChooseDialog extends AlertDialog {
      */
     private MySpinnerAdapter teacherAdapter;
     /**
-     * 课程选择适配器
-     */
-    private MySpinnerAdapter courseAdapter;
-    /**
      * 回调
      */
     private OnConformCallBack onConformCallBack;
-    /**
-     * 选择的老师
-     */
-    private String teacher = "";
-    /**
-     * 选择的课程
-     */
-    private String course = "";
-    List<String> teacherDatas = new ArrayList<>();
-    List<String> courseDatas = new ArrayList<>();
+
+    private List<UserInfo> userInfoList;
+    private UserInfo userInfo;
 
     public CourseChooseDialog(Context context) {
         super(context);
@@ -83,50 +74,19 @@ public class CourseChooseDialog extends AlertDialog {
         setCanceledOnTouchOutside(false);
         //解决无法弹出软键盘
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        teacherDatas.add("叶挺挺");
-        for (int i = 0; i < 10; i++) {
+        userInfoList = new ArrayList<>();
 
-            teacherDatas.add("老师" + i);
-        }
-        courseDatas.add("信息安全技术");
-        for (int i = 0; i < 10; i++) {
-            courseDatas.add("课程" + i);
-        }
-        teacherAdapter = new MySpinnerAdapter(context);
-        spTeacher.setAdapter(teacherAdapter);
-        teacherAdapter.setDatas(teacherDatas);
-        spTeacher.setOnItemSelectedListener(teacherListener);
 
-        courseAdapter = new MySpinnerAdapter(context);
-        spCourse.setAdapter(courseAdapter);
-        courseAdapter.setDatas(courseDatas);
-        spCourse.setOnItemSelectedListener(courseListener);
     }
 
-    private AdapterView.OnItemSelectedListener courseListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-            course = courseDatas.get(position);
-            spCourse.setPrompt(course);
-        }
+    public void setUserInfoList(List<UserInfo> userInfoList) {
+        this.userInfoList.clear();
+        this.userInfoList.addAll(userInfoList);
+        teacherAdapter = new MySpinnerAdapter(context, userInfoList);
+        spTeacher.setAdapter(teacherAdapter);
+        spTeacher.setOnItemSelectedListener(this);
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-    };
-    private AdapterView.OnItemSelectedListener teacherListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-            teacher = teacherDatas.get(position);
-            spTeacher.setPrompt(teacher);
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-    };
+    }
 
 
     @OnClick({R.id.bt_cancel, R.id.bt_conform})
@@ -138,7 +98,7 @@ public class CourseChooseDialog extends AlertDialog {
             case R.id.bt_conform:
                 if (onConformCallBack != null) {
                     String room = tvClass.getText().toString();
-                    onConformCallBack.onCallBack(room, teacher, course);
+                    onConformCallBack.onCallBack(room, userInfo);
                 }
                 dismiss();
                 break;
@@ -149,8 +109,20 @@ public class CourseChooseDialog extends AlertDialog {
         this.onConformCallBack = onConformCallBack;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        userInfo = userInfoList.get(position);
+        spTeacher.setPrompt(userInfo.getTruename());
+        tvCourse.setText(userInfo.getPosition());
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
 
     public interface OnConformCallBack {
-        void onCallBack(String room, String teacher, String course);
+        void onCallBack(String room, UserInfo userInfo);
     }
 }

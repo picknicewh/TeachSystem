@@ -22,9 +22,10 @@ public interface AddMemberContract {
           int getSex();
           String getPosition();
           String getBirthday();
-
+        void success();
     }
     interface Presenter extends BaseContract.BasePresenter<View> {
         void addMember();
+
     }
 }
