@@ -287,8 +287,10 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        conformDialog.show();
-        conformDialog.setTitle("确定要删除此条课程吗？");
+        if (UserMessage.getInstance().getUserType() == 1) {
+            conformDialog.show();
+            conformDialog.setTitle("确定要删除此条课程吗？");
+        }
         return false;
     }
 

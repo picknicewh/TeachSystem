@@ -56,9 +56,6 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
         }
         setSubtitleClickListener(this);
         adapter = new ClassMemberAdapter(userInfoList, this);
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
         rvClassInfo.setLayoutManager(new LinearLayoutManager(this));
         rvClassInfo.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
