@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.classinfo;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.CourseVo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -22,10 +25,15 @@ public interface AddMemberContract {
           int getSex();
           String getPosition();
           String getBirthday();
-        void success();
+          String getPath();
+         void success();
+        void setCourseList(List<CourseVo> courseVoList);
+         void setImagePath(String path);
     }
     interface Presenter extends BaseContract.BasePresenter<View> {
         void addMember();
+        void getScheduleList();
+        void updateImage();
 
     }
 }

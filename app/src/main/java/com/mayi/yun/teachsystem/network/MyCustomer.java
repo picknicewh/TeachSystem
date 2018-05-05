@@ -22,16 +22,19 @@ public class MyCustomer<T> implements Consumer<T> {
 
     @Override
     public void accept(T t) throws Exception {
-        if (t instanceof  Common){
-            Common common  = (Common) t;
-            if (common.getCode()!=200){
+        if (t instanceof Common) {
+            Common common = (Common) t;
+            if (!common.getCode() .equals("200")) {
                 callBack.getErrorMessage(common.getDesc());
-
-            }else {
-                if (common.getData() instanceof  String){
+            } else {
+                if (common.getData() instanceof String) {
                     callBack.setResult(common.getDesc());
                 }
-                callBack.setResult(common.getData());
+                if (common.getData()==null){
+                    callBack.getErrorMessage(common.getDesc());
+                }else {
+                    callBack.setResult(common.getData());
+                }
             }
         }
 
@@ -39,6 +42,7 @@ public class MyCustomer<T> implements Consumer<T> {
 
     public interface CallBack {
         void getErrorMessage(String message);
+
         void setResult(Object t);
     }
 }

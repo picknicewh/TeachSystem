@@ -16,6 +16,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.bean.CourseVo;
 import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.DataUtil;
@@ -149,6 +150,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
      * 开始时间
      */
     private Date mDate;
+    private String className;
 
     @Override
     public void initInjector() {
@@ -163,10 +165,13 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     @Override
     public void initView() {
         setTitleTextId(R.string.add_member);
-        setSubTitleText("完成");
+        if (UserMessage.getInstance().getUserType() == 1) {
+            setSubTitleText("完成");
+        }
         setSubtitleClickListener(this);
+        className = getIntent().getStringExtra("className");
+        tvClass.setText(className);
         dialog = new PictureChooseDialog(this);
-
         positionList = DataUtil.getPositionList();
         courseList = new ArrayList<>();
         optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
@@ -179,6 +184,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
 
 
     }
+
 
     private TimePickerView.OnTimeSelectListener TimeListener = new TimePickerView.OnTimeSelectListener() {
         @Override
@@ -226,6 +232,8 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
 
 
     @OnClick(R.id.tv_position)
+
+
     public void position() {
         optionsPickerView.show();
     }
@@ -260,8 +268,11 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     FileUtils.savePhoto(imagePath, bitmap);
                     ivHead.setImageBitmap(bitmap);
-                    G.log("xxxxdddxxxxxxx" + imagePath);
                 }
+            }
+            G.log("xxxxdddxxxxxxx" + imagePath);
+            if (mPresenter != null) {
+                mPresenter.updateImage();
             }
         }
         if (requestCode == REQUEST_CODE) {
@@ -324,17 +335,37 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     }
 
     @Override
+    public String getPath() {
+        return imagePath;
+    }
+
+    @Override
     public void success() {
         finish();
     }
 
     @Override
+    public void setCourseList(List<CourseVo> courseVoList) {
+        for (int i = 0; i < courseVoList.size(); i++) {
+            positionList.add(courseVoList.get(i).getSchedule());
+        }
+        optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
+
+
+    }
+
+    @Override
+    public void setImagePath(String path) {
+        this.imageUrl = path;
+    }
+
+    @Override
     public void onClick(View view) {
-        if (G.isEmteny(getTrueName()) ||G.isEmteny(getBirthday()) || G.isEmteny(getPosition()) || G.isEmteny(getPhone())){
-            G.showToast(this,"必要条件不能为空！");
+        if (G.isEmteny(getTrueName()) || G.isEmteny(getBirthday()) || G.isEmteny(getPosition()) || G.isEmteny(getPhone())) {
+            G.showToast(this, "必要条件不能为空！");
             return;
         }
-        if (mPresenter!=null){
+        if (mPresenter != null) {
             mPresenter.addMember();
         }
     }

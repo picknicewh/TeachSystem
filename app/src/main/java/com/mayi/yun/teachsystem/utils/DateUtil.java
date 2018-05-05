@@ -72,6 +72,44 @@ public class DateUtil {
         return weekDays[w];
     }
 
+    public static String getCouresTime(int num) {
+        String courseTime = "";
+        switch (num) {
+            case 1:
+                courseTime = "08:00-09:40";
+                break;
+            case 2:
+                courseTime = "10:00-11:40";
+                break;
+            case 3:
+                courseTime = "14:00-15:40";
+                break;
+            case 4:
+                courseTime = "16:00-17:40";
+                break;
+        }
+        return courseTime;
+    }
+
+    public static String getCourse(int num) {
+        String courseTime = "";
+        switch (num) {
+            case 1:
+                courseTime = "第一二节";
+                break;
+            case 2:
+                courseTime = "第三四节";
+                break;
+            case 3:
+                courseTime = "第五六节";
+                break;
+            case 4:
+                courseTime = "第七八节";
+                break;
+        }
+        return courseTime;
+    }
+
     /**
      *  * 时间转换为时间戳 
      *  * @param timeStr 时间 例如: 2016-03-09 

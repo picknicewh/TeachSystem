@@ -11,6 +11,7 @@ import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.network.GlideImageLoader;
 import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
 import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
+import com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
@@ -137,7 +138,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 intent.setClass(getActivity(), AttentionActivityH.class);
                 break;
             case Constant.TEACHER:
-                intent.setClass(getActivity(), ClassListActivity.class);
+                intent.setClass(getActivity(), CourseListActivity.class);
                 intent.putExtra("source",Constant.SOURCE_ATTEBD);
                 break;
             case Constant.STUDENT:

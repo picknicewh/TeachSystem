@@ -70,6 +70,7 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, AddMemberActivity.class);
+        intent.putExtra("className",getIntent().getStringExtra("className"));
         startActivity(intent);
     }
 
@@ -77,6 +78,7 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
     public void onClick(View view, int position) {
         Intent intent = new Intent(this, EditMemberActivity.class);
         intent.putExtra("userInfo", userInfoList.get(position));
+
         startActivity(intent);
     }
 
@@ -90,8 +92,6 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
         String classId;
         if (UserMessage.getInstance().getUserType() == 2) {
             classId = getIntent().getStringExtra("classId");
-
-
         } else {
             classId = String.valueOf(UserMessage.getInstance().getClassId());
         }

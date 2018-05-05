@@ -44,6 +44,11 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     LinearLayout llNodata;
     private AttentionAdapterT attentionAdapterT;
     private List<UserInfo> userInfoList;
+    private UserInfo currentUserInfo;
+    /**
+     * 是否到场
+     */
+    private int sign;
 
     @Override
     public void initInjector() {
@@ -60,9 +65,10 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
         setTitleTextId(R.string.attend_p);
         initViews();
         String className = getIntent().getStringExtra("className");
+
         tvClass.setText(className);
         Date date = new Date();
-        tvDate.setText(DateUtil.getFormatDate(date));
+        tvDate.setText(DateUtil.getFormatTimeDate(date));
         tvWeek.setText(DateUtil.getWeekOfDate(date));
     }
 
@@ -89,10 +95,12 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
         viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
         if (direction == CardConfig.SWIPING_LEFT) {
             holder.likeImageView.setAlpha(Math.abs(ratio));
+            sign = 1;
             ivAttend.setAlpha(Math.abs(ratio));
         } else if (direction == CardConfig.SWIPING_RIGHT) {
             holder.dislikeImageView.setAlpha(Math.abs(ratio));
             ivUnAttend.setAlpha(Math.abs(ratio));
+            sign = 0;
         } else {
             holder.dislikeImageView.setAlpha(0f);
             holder.likeImageView.setAlpha(0f);
@@ -104,11 +112,15 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, UserInfo userInfo, int direction) {
         AttentionAdapterT.ViewHolder holder = (AttentionAdapterT.ViewHolder) viewHolder;
+        currentUserInfo = userInfo;
         viewHolder.itemView.setAlpha(1f);
         holder.dislikeImageView.setAlpha(0f);
         holder.likeImageView.setAlpha(0f);
         ivAttend.setAlpha(1f);
         ivUnAttend.setAlpha(1f);
+        if (mPresenter != null) {
+            mPresenter.addSign();
+        }
     }
 
     @Override
@@ -140,8 +152,29 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     }
 
     @Override
+    public String getUserId() {
+        return String.valueOf(currentUserInfo.getUserId());
+    }
+
+
+    @Override
+    public String getUserName() {
+        return currentUserInfo.getTruename();
+    }
+
+    @Override
+    public int getScheduleId() {
+        return getIntent().getIntExtra("scheduleId", 0);
+    }
+
+    @Override
+    public int isSign() {
+        return sign;
+    }
+
+    @Override
     public void setUserInfoList(List<UserInfo> userInfoList) {
-        String data = "总人数:"+userInfoList.size()+"人";
+        String data = "总人数:" + userInfoList.size() + "人";
         tvNumber.setText(data);
         this.userInfoList.clear();
         this.userInfoList.addAll(userInfoList);

@@ -18,9 +18,14 @@ public interface AttentionContractT {
     interface View extends BaseContract.BaseView {
         String getUserType();
         String getClassId();
+        String getUserId();
+        String getUserName();
+        int getScheduleId();
+        int isSign();
         void setUserInfoList(List<UserInfo> userInfoList);
     }
     interface Presenter extends BaseContract.BasePresenter<View> {
         void getUserByClassId();
+        void addSign();
     }
 }

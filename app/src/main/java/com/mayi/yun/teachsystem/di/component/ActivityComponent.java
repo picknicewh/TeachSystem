@@ -9,13 +9,19 @@ import com.mayi.yun.teachsystem.di.scope.PerActivity;
 import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
 import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
 import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
+import com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.AddMemberActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
+import com.mayi.yun.teachsystem.ui.head.EditHeadActivity;
+import com.mayi.yun.teachsystem.ui.head.HeadListActivity;
 import com.mayi.yun.teachsystem.ui.leave.student.LeaveAskActivity;
+import com.mayi.yun.teachsystem.ui.leave.teacher.LeaveDetailActivity;
 import com.mayi.yun.teachsystem.ui.leave.teacher.LeaveListActivity;
 import com.mayi.yun.teachsystem.ui.login.LoginActivity;
+import com.mayi.yun.teachsystem.ui.my.MyAttendActivity;
+import com.mayi.yun.teachsystem.ui.password.PasswordActivity;
 
 import dagger.Component;
 
@@ -59,5 +65,17 @@ public interface ActivityComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(ClassListActivity classListActivity);
+
+    void inject(CourseListActivity courseListActivity);
+
+    void inject(MyAttendActivity myAttendActivity);
+
+    void inject(LeaveDetailActivity leaveDetailActivity);
+
+    void inject(HeadListActivity headListActivity);
+
+    void inject(EditHeadActivity editHeadActivity);
+
+    void  inject(PasswordActivity passwordActivity);
 
 }

@@ -13,10 +13,18 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface LeaveDetailContract {
     interface View extends BaseContract.BaseView {
+        int getScheduleId();
 
+        int getStatus();
+
+        int getTeacherId();
+
+        String getTeacherName();
+
+        void onSuccess();
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void updateLeave();
     }
 }

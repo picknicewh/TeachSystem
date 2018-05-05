@@ -10,6 +10,7 @@ import com.mayi.yun.teachsystem.network.MyCustomer;
 import com.mayi.yun.teachsystem.network.RetrofitManager;
 import com.mayi.yun.teachsystem.network.RxSchedulers;
 import com.mayi.yun.teachsystem.network.ThrowCustomer;
+import com.mayi.yun.teachsystem.utils.G;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,11 +55,38 @@ public class CourseSchedulePresenter extends BasePresenter<CourseScheduleContrac
                     public void getErrorMessage(String message) {
                         mView.showMessage(message);
                         mView.hideProgress();
+                        if (message.contains("成功")){
+                            mView.onSuccess();
+                        }
                     }
 
                     @Override
                     public void setResult(Object t) {
-                       mView.addSuccess();
+                        mView.hideProgress();
+                    }
+                }));
+    }
+
+    @Override
+    public void delSchedule() {
+        mView.showProgress();
+        RetrofitManager.create(ApiService.class, ApiService.HOST)
+                .deleteSchedule(mView.getScheduleId())
+                .compose(RxSchedulers.<Common<String>>applySchedulers())
+                .compose(mView.<Common>bindToLife())
+                .subscribe(new MyCustomer<Common>(new MyCustomer.CallBack() {
+                    @Override
+                    public void getErrorMessage(String message) {
+                        mView.showMessage(message);
+                        mView.hideProgress();
+                        G.log("xxxxxxx"+"");
+                        if (message.equals("删除成功")){
+                            mView.onSuccess();
+                        }
+                    }
+                    @Override
+                    public void setResult(Object t) {
+
                         mView.hideProgress();
                     }
                 }));

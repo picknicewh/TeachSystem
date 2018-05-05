@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.leave.teacher;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.VacationVo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -13,10 +16,16 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface LeaveListContract {
     interface View extends BaseContract.BaseView {
+        int getUserId();
 
+        int getTeacherId();
+
+        void setVacationVoList(List<VacationVo> vacationVoList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
+        void getLeaveListTeacher();
 
+        void getLeaveListUser();
     }
 }

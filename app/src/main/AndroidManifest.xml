@@ -105,9 +105,16 @@
         <activity
             android:name=".ui.password.PasswordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.head.EditHeadActivity" />
-        <activity android:name=".ui.head.HeadListActivity" />
-        <activity android:name=".ui.classinfo.ClassListActivity"></activity>
+        <activity android:name=".ui.head.EditHeadActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.head.HeadListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.classinfo.ClassListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.attend.teacher.CourseListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.my.MyAttendActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

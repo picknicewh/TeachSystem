@@ -9,8 +9,9 @@ import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.ClassVo;
 import com.mayi.yun.teachsystem.db.UserMessage;
-import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
+import com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
+import com.mayi.yun.teachsystem.ui.my.MyAttendActivity;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
@@ -74,13 +75,17 @@ public class ClassListActivity extends BaseClassActivity<ClassListPresenter> imp
         Intent intent = new Intent();
         switch (source) {
             case Constant.SOURCE_ATTEBD:
-                intent.setClass(this, AttentionActivityT.class);
+                intent.setClass(this, CourseListActivity.class);
                 break;
             case Constant.SOURCE_MEMBER:
                 intent.setClass(this, ClassMemberInfoActivity.class);
                 break;
             case Constant.SOURCE_COURSE:
                 intent.setClass(this, CourseScheduleActivity.class);
+                break;
+            case Constant.SOURCE_ATTEND_LIST:
+                intent.setClass(this, MyAttendActivity.class);
+
                 break;
         }
         intent.putExtra("classId", String.valueOf(classList.get(position).getClassId()));

@@ -4,11 +4,13 @@ import android.widget.EditText;
 
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.db.UserMessage;
+import com.mayi.yun.teachsystem.utils.G;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PasswordActivity extends BaseClassActivity<PasswordPresenter> {
+public class PasswordActivity extends BaseClassActivity<PasswordPresenter> implements PasswordContract.View {
 
     /**
      * 原密码
@@ -28,7 +30,7 @@ public class PasswordActivity extends BaseClassActivity<PasswordPresenter> {
 
     @Override
     public void initInjector() {
-
+        mActivityComponent.inject(this);
     }
 
     @Override
@@ -38,10 +40,37 @@ public class PasswordActivity extends BaseClassActivity<PasswordPresenter> {
 
     @Override
     public void initView() {
-       setTitleTextId(R.string.attend_s);
+        setTitleText("修改密码");
     }
+
     @OnClick(R.id.bt_conform)
     public void conform() {
+        if (!tvEditPassword.getText().toString().equals(tvComPassword.getText().toString())) {
+            G.showToast(this, "两次密码不一致");
+            return;
+        }
+        if (mPresenter != null) {
+            mPresenter.updateUser();
+        }
+    }
 
+    @Override
+    public String getUserId() {
+        return String.valueOf(UserMessage.getInstance().getUserId());
+    }
+
+    @Override
+    public String getPassword() {
+        return tvEditPassword.getText().toString();
+    }
+
+    @Override
+    public String getOldPassword() {
+        return tvOriPassword.getText().toString();
+    }
+
+    @Override
+    public void onSuccess() {
+        finish();
     }
 }

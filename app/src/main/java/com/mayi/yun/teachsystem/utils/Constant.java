@@ -82,4 +82,8 @@ public class Constant {
      */
     public static final int SOURCE_COURSE = 3;
 
+    /**
+     * 进入学生列表来源----我的-考勤记录
+     */
+    public static final int SOURCE_ATTEND_LIST = 4;
 }

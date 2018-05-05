@@ -13,6 +13,7 @@ import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.DateUtil;
 import com.mayi.yun.teachsystem.utils.G;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
+import com.mayi.yun.teachsystem.widget.ConformDialog;
 import com.mayi.yun.teachsystem.widget.CourseChooseDialog;
 import com.mayi.yun.teachsystem.widget.MyGridView;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePresenter> implements CourseScheduleContract.View, OnItemClickListener, AdapterView.OnItemClickListener, CourseChooseDialog.OnConformCallBack {
+public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePresenter> implements CourseScheduleContract.View, OnItemClickListener, AdapterView.OnItemClickListener, CourseChooseDialog.OnConformCallBack, AdapterView.OnItemLongClickListener, ConformDialog.OnConformCallBack {
     /**
      * 周
      */
@@ -33,8 +34,6 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
      */
     @BindView(R.id.gv_course)
     MyGridView gvCourse;
-
-
     /**
      * 日期列表
      */
@@ -77,6 +76,10 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
      */
     private List<CourseVo> courseVoList;
 
+    private String classId = "";
+    private int scheduleId = -1;
+    private ConformDialog conformDialog;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_course_schedule;
@@ -86,6 +89,7 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
     public void initView() {
         setTitleTextId(R.string.course);
         setSubTitleText(DateUtil.getFormatDate(new Date()));
+        classId = getIntent().getStringExtra("classId");
         init();
         userInfoList = new ArrayList<>();
         adapter = new WeekAdapter(this, dateList);
@@ -97,15 +101,15 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         courseAdapter = new CourseScheduleAdapter(this, courseList);
         gvCourse.setAdapter(courseAdapter);
         gvCourse.setOnItemClickListener(this);
-
+        gvCourse.setOnItemLongClickListener(this);
         dialog = new CourseChooseDialog(this);
         dialog.setOnConformCallBack(this);
-
+        conformDialog = new ConformDialog(this);
+        conformDialog.setOnConformCallBack(this);
         if (mPresenter != null) {
             mPresenter.getUserByClassId();
             mPresenter.getScheduleList();
         }
-
     }
 
 
@@ -132,6 +136,7 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         if (UserMessage.getInstance().getUserType() == 1) {
             this.clickPosition = position;
+            G.log("ssxxssss" + "行：" + getNumberData(clickPosition) + "列：" + getWeekData(clickPosition));
             dialog.show();
             dialog.setUserInfoList(userInfoList);
         }
@@ -139,8 +144,6 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
 
     @Override
     public void onCallBack(String room, UserInfo userInfo) {
-        /*course + "(" + teacher + ")" +*/
-        String info = room;
         teacherId = String.valueOf(userInfo.getUserId());
         teacherName = userInfo.getTruename();
         schedule = userInfo.getPosition();
@@ -152,7 +155,10 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
 
     @Override
     public String getClassId() {
-        return getIntent().getStringExtra("classId");
+        if (G.isEmteny(classId)) {
+            classId = String.valueOf(UserMessage.getInstance().getClassId());
+        }
+        return classId;
     }
 
     @Override
@@ -173,6 +179,11 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
     @Override
     public String getSchedule() {
         return schedule;
+    }
+
+    @Override
+    public int getScheduleId() {
+        return getScheuleId(clickPosition);
     }
 
     @Override
@@ -201,8 +212,6 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
     @Override
     public void setUserInfoList(List<UserInfo> userInfoList) {
         this.userInfoList = userInfoList;
-
-
     }
 
     @Override
@@ -214,19 +223,16 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
             int weekday = courseVo.getWeekday();
             int number = courseVo.getNumber();
             int position = number * 7 + weekday - 8;
-            String info = courseVo.getClassName() + courseVo.getTeacherName() + courseVo.getClassroom() + "室";
+            String info = courseVo.getSchedule() + courseVo.getTeacherName() + courseVo.getClassroom() + "室";
             courseList.set(position, info);
         }
         if (courseAdapter != null) {
             courseAdapter.notifyDataSetChanged();
         }
-
-
     }
 
     @Override
-    public void addSuccess() {
-        G.showToast(this,"添加成功！");
+    public void onSuccess() {
         if (mPresenter != null) {
             mPresenter.getScheduleList();
         }
@@ -264,5 +270,36 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
             number = 4;
         }
         return number;
+    }
+
+    public int getScheuleId(int clickPosition) {
+        int scheduleId = -1;
+        int number = getNumberData(clickPosition);
+        int week = getWeekData(clickPosition);
+        for (int i = 0;i<courseVoList.size();i++){
+            CourseVo courseVo =courseVoList.get(i);
+            if (courseVo.getWeekday()==week && courseVo.getNumber()==number){
+                scheduleId = courseVo.getId();
+            }
+        }
+        return scheduleId;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        conformDialog.show();
+        conformDialog.setTitle("确定要删除此条课程吗？");
+        return false;
+    }
+
+    @Override
+    public void onCallBack() {
+        if (scheduleId == -1) {
+            G.showToast(this, "当前时间课程表为空！");
+            return;
+        }
+        if (mPresenter != null) {
+            mPresenter.delSchedule();
+        }
     }
 }

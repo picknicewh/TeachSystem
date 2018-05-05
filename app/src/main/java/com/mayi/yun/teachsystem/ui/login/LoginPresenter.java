@@ -4,13 +4,11 @@ import com.mayi.yun.teachsystem.base.BasePresenter;
 import com.mayi.yun.teachsystem.bean.Common;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.network.ApiService;
+import com.mayi.yun.teachsystem.network.MyCustomer;
 import com.mayi.yun.teachsystem.network.RetrofitManager;
 import com.mayi.yun.teachsystem.network.RxSchedulers;
-import com.mayi.yun.teachsystem.network.ThrowCustomer;
 
 import javax.inject.Inject;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * 作者： wh
@@ -34,18 +32,21 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 .login(mView.getMemberSn(), mView.getPassword())
                 .compose(RxSchedulers.<Common<UserInfo>>applySchedulers())
                 .compose(mView.<Common<UserInfo>>bindToLife())
-                .subscribe(new Consumer<Common<UserInfo>>() {
-                    @Override
-                    public void accept(Common<UserInfo> result) throws Exception {
-                        mView.setUseInfo(result.getData());
-                        mView.hideProgress();
-                    }
-                }, new ThrowCustomer(new ThrowCustomer.CallBack() {
+                .subscribe(new MyCustomer<Common<UserInfo>>(new MyCustomer.CallBack() {
                     @Override
                     public void getErrorMessage(String message) {
                         mView.showMessage(message);
                         mView.hideProgress();
                     }
+
+                    @Override
+                    public void setResult(Object t) {
+                        mView.hideProgress();
+                        UserInfo result = (UserInfo) t;
+                        mView.setUseInfo(result);
+                    }
                 }));
+
     }
+
 }

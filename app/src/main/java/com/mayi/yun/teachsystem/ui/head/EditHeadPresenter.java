@@ -1,6 +1,16 @@
 package com.mayi.yun.teachsystem.ui.head;
 
 import com.mayi.yun.teachsystem.base.BasePresenter;
+import com.mayi.yun.teachsystem.bean.ClassVo;
+import com.mayi.yun.teachsystem.bean.Common;
+import com.mayi.yun.teachsystem.network.ApiService;
+import com.mayi.yun.teachsystem.network.MyCustomer;
+import com.mayi.yun.teachsystem.network.RetrofitManager;
+import com.mayi.yun.teachsystem.network.RxSchedulers;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,5 +27,63 @@ public class EditHeadPresenter extends BasePresenter<EditHeadContract.View> impl
     @Inject
     public EditHeadPresenter(){
 
+    }
+
+    @Override
+    public void addMember() {
+        mView.showProgress();
+        Map<String,Object> params = new HashMap<>();
+        params.put("userType",mView.getUserType());
+        params.put("classId",mView.getClassId());
+        params.put("userSn",mView.getUserSn());
+        params.put("phone",mView.getPhone());
+        params.put("truename",mView.getTrueName());
+        params.put("avatar",mView.getAvatar());
+        params.put("sex",mView.getSex());
+        params.put("position",mView.getPosition());
+        params.put("birthday",mView.getBirthday());
+        RetrofitManager.create(ApiService.class, ApiService.HOST)
+                .addMember(params)
+                .compose(RxSchedulers.<Common<String>>applySchedulers())
+                .compose(mView.<Common>bindToLife())
+                .subscribe(new MyCustomer<Common>(new MyCustomer.CallBack() {
+                    @Override
+                    public void getErrorMessage(String message) {
+                        mView.showMessage(message);
+                        mView.hideProgress();
+                        if (message.equals("添加成功")){
+                            mView.success();
+                        }
+                    }
+
+                    @Override
+                    public void setResult(Object t) {
+                        String result = (String) t;
+                        mView.showMessage(result);
+                        mView.hideProgress();
+                    }
+                }));
+    }
+
+    @Override
+    public void getClassList() {
+        mView.showProgress();
+        RetrofitManager.create(ApiService.class, ApiService.HOST)
+                .getClassList("")
+                .compose(RxSchedulers.<Common<List<ClassVo>>>applySchedulers())
+                .compose(mView.<Common<List<ClassVo>>>bindToLife())
+                .subscribe(new MyCustomer<Common<List<ClassVo>>>(new MyCustomer.CallBack() {
+                    @Override
+                    public void getErrorMessage(String message) {
+                        mView.showMessage(message);
+                        mView.hideProgress();
+                    }
+                    @Override
+                    public void setResult(Object t) {
+                        mView.hideProgress();
+                        List<ClassVo> classVoList = (List<ClassVo>) t;
+                        mView.setClassList(classVoList);
+                    }
+                }));
     }
 }

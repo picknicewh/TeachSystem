@@ -79,6 +79,16 @@ public class CourseChooseDialog extends AlertDialog implements AdapterView.OnIte
 
     }
 
+  /*  public void setClassInfo(CourseVo classInfo) {
+        tvClass.setText(classInfo.getClassroom());
+        tvCourse.setText(classInfo.getSchedule());
+        spTeacher.setPrompt(classInfo.getTeacherName());
+        userInfo = new UserInfo();
+        userInfo.setPosition(classInfo.getSchedule());
+        userInfo.setTruename(classInfo.getTeacherName());
+        userInfo.setUserId(classInfo.getTeacherId());
+    }
+*/
     public void setUserInfoList(List<UserInfo> userInfoList) {
         this.userInfoList.clear();
         this.userInfoList.addAll(userInfoList);

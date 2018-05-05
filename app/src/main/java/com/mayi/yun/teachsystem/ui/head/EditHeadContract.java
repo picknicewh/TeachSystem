@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.head;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.ClassVo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -13,10 +16,21 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface EditHeadContract {
     interface View extends BaseContract.BaseView {
-
+        int getUserType();
+        String getClassId();
+        String getUserSn();
+        String getPhone();
+        String getTrueName();
+        String getAvatar();
+        int getSex();
+        String getPosition();
+        String getBirthday();
+        void success();
+        void setClassList(List<ClassVo> classList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void addMember();
+        void getClassList();
     }
 }

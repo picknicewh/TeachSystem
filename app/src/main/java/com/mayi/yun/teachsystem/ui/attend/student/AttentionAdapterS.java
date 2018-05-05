@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
-import com.mayi.yun.teachsystem.bean.CourseInfo;
+import com.mayi.yun.teachsystem.bean.AttendVo;
+import com.mayi.yun.teachsystem.utils.DateUtil;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
 import java.util.List;
@@ -23,10 +24,10 @@ import java.util.List;
 public class AttentionAdapterS extends RecyclerView.Adapter<AttentionAdapterS.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private List<CourseInfo> courseInfoList;
+    private List<AttendVo> attendVoList;
 
-    public AttentionAdapterS(List<CourseInfo> courseInfoList) {
-        this.courseInfoList = courseInfoList;
+    public AttentionAdapterS(List<AttendVo> attendVoList) {
+        this.attendVoList = attendVoList;
     }
 
     @Override
@@ -37,10 +38,11 @@ public class AttentionAdapterS extends RecyclerView.Adapter<AttentionAdapterS.Vi
 
     @Override
     public void onBindViewHolder(AttentionAdapterS.ViewHolder holder, final int position) {
-        CourseInfo courseInfo = courseInfoList.get(position);
-        holder.tvCourse.setText(courseInfo.getName() + "(" + courseInfo.getTeacher() + ")" + courseInfo.getRoom());
-        holder.tvStatus.setText(courseInfo.isAttend() ? "已考勤" : "未考勤");
-        holder.tvTime.setText(courseInfo.getTime());
+        AttendVo attendVo = attendVoList.get(position);
+        holder.tvCourse.setText(attendVo.getSchedule());
+        holder.tvStatus.setText(attendVo.getIsSign() == 1 ? "已考勤" : "未考勤");
+        String time = DateUtil.getCourse(attendVo.getNumber()) + "(" + DateUtil.getCouresTime(attendVo.getNumber()) + ")";
+        holder.tvTime.setText(time);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +55,7 @@ public class AttentionAdapterS extends RecyclerView.Adapter<AttentionAdapterS.Vi
 
     @Override
     public int getItemCount() {
-        return courseInfoList.size();
+        return attendVoList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

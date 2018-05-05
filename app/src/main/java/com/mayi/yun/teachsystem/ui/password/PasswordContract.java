@@ -13,10 +13,13 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface PasswordContract {
     interface View extends BaseContract.BaseView {
-
+        String getUserId();
+        String getPassword();
+        String getOldPassword();
+        void onSuccess();
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void updateUser();
     }
 }

@@ -9,15 +9,15 @@ package com.mayi.yun.teachsystem.bean;
  * 主要接口：
  */
 public class Common<T> {
-    private int code;
+    private String code;
     private String desc;
     private T data;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

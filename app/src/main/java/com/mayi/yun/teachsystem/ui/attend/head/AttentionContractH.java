@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.attend.head;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.UserInfo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -13,10 +16,12 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface AttentionContractH {
     interface View extends BaseContract.BaseView {
-
+        String getUserType();
+        String getClassId();
+        void setUserInfoList(List<UserInfo> userInfoList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void getUserByClassId();
     }
 }

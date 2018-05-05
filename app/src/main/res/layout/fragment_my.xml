@@ -27,7 +27,7 @@
             <TextView
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space"
-                android:text="学号 20123650"
+
                 android:textColor="@color/main_text_color"
                 android:id="@+id/tv_study_num"
                 android:layout_width="wrap_content"
@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/ll_class"
                 android:layout_marginTop="@dimen/space"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -101,7 +102,7 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/tv_position"
-                    android:text="班长"
+
                     android:textColor="@color/main_text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -109,6 +110,7 @@
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/rl_list"
         android:layout_marginTop="@dimen/space"
         android:background="@color/white"
        android:layout_marginBottom="@dimen/space"
@@ -116,7 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="老师信息"
+            android:text="考勤记录"
             android:gravity="center"
             android:padding="@dimen/space"
             android:drawableLeft="@mipmap/ic_attend_list"
@@ -156,7 +158,23 @@
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_password"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="修改密码"
+            android:gravity="center"
+            android:padding="@dimen/space"
+            android:drawablePadding="@dimen/space"
+            android:drawableLeft="@mipmap/ic_update_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rl_exit"
         android:background="@color/white"
@@ -174,4 +192,5 @@
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
+
 </LinearLayout>

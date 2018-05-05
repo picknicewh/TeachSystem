@@ -44,10 +44,19 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         VacationVo vacationVo = vacationVoList.get(position);
-        holder.tv_back_date.setText(vacationVo.getBack_school_date());
-        holder.tv_course.setText(vacationVo.getVa_content());
-        holder.tv_days.setText(vacationVo.getDay_number());
-        holder.tv_name.setText(vacationVo.getTs_name());
+        holder.tv_back_date.setText(vacationVo.getEndtime());
+        holder.tv_course.setText(vacationVo.getReason());
+        holder.tv_days.setText(vacationVo.getDays() + "");
+        holder.tv_name.setText(vacationVo.getUserName());
+        String data = "";
+        if (vacationVo.getStatus() == 0) {
+            data = "未审核";
+        } else if (vacationVo.getStatus() == 1) {
+            data = "同意";
+        } else if (vacationVo.getStatus() == 2) {
+            data = "拒绝";
+        }
+        holder.tv_status.setText(data);
         if (UserMessage.getInstance().getUserType() == 3) {
             holder.tv_name.setVisibility(View.GONE);
             holder.tv_name_text.setVisibility(View.GONE);
@@ -68,7 +77,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
 
     @Override
     public int getItemCount() {
-        return 1;
+        return vacationVoList.size();
     }
 
 
@@ -78,6 +87,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
         TextView tv_name_text;
         TextView tv_days;
         TextView tv_course;
+        TextView tv_status;
 
         public ViewHolder(View view) {
             super(view);
@@ -86,6 +96,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
             tv_back_date = view.findViewById(R.id.tv_back_date);
             tv_days = view.findViewById(R.id.tv_days);
             tv_course = view.findViewById(R.id.tv_course);
+            tv_status = view.findViewById(R.id.tv_status);
             view.setTag(this);
         }
     }

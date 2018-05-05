@@ -72,4 +72,5 @@ public class CourseScheduleAdapter extends BaseAdapter {
             view.setTag(this);
         }
     }
+
 }

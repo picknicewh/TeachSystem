@@ -7,7 +7,6 @@ import com.mayi.yun.teachsystem.di.module.FragmentModule;
 import com.mayi.yun.teachsystem.di.scope.ContextLife;
 import com.mayi.yun.teachsystem.di.scope.PerFragment;
 import com.mayi.yun.teachsystem.ui.home.HomeFragment;
-import com.mayi.yun.teachsystem.ui.my.MyFragment;
 import com.mayi.yun.teachsystem.ui.study.StudyFragment;
 import com.mayi.yun.teachsystem.ui.study.StudySystemFragment;
 import com.mayi.yun.teachsystem.ui.study.detail.ArticleListFragment;
@@ -35,7 +34,7 @@ public interface FragmentComponent {
     Activity getActivity();
 
     void inject(HomeFragment homeFragment);
-    void inject(MyFragment myFragment);
+    //void inject(MyFragment myFragment);
     void inject(StudyFragment newsFragment);
     void inject(ArticleListFragment fragment);
     void inject(StudySystemFragment studySystemFragment);

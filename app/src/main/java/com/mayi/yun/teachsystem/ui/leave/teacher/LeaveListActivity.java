@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView;
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.VacationVo;
@@ -21,15 +19,15 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class LeaveListActivity extends BaseClassActivity<LeaveListPresenter> implements View.OnClickListener, OnItemClickListener {
+public class LeaveListActivity extends BaseClassActivity<LeaveListPresenter> implements View.OnClickListener, OnItemClickListener, LeaveListContract.View {
 
     @BindView(R.id.tv_nodata)
     TextView tvNodata;
     @BindView(R.id.prv)
-    PullToRefreshRecyclerView prv;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private LeaveListAdapter adapter;
-     private List<VacationVo> vacationVoList;
+    private List<VacationVo> vacationVoList;
+
     @Override
     public void initInjector() {
         mActivityComponent.inject(this);
@@ -43,21 +41,30 @@ public class LeaveListActivity extends BaseClassActivity<LeaveListPresenter> imp
     @Override
     public void initView() {
         setTitleTextId(R.string.leave);
-        if (UserMessage.getInstance().getUserType()==3){
+        if (UserMessage.getInstance().getUserType() == 3) {
             setSubTitleTextId(R.string.leave_ask);
         }
         setSubtitleClickListener(this);
-        recyclerView = prv.getRefreshableView();
-        prv.setMode(PullToRefreshBase.Mode.BOTH);
         vacationVoList = new ArrayList<>();
-        vacationVoList= G.getVacationVoList();
         adapter = new LeaveListAdapter(vacationVoList);
-        if (adapter!=null){
-            adapter.notifyDataSetChanged();
-        }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (UserMessage.getInstance().getUserType() == 3) {
+            if (mPresenter != null) {
+                mPresenter.getLeaveListUser();
+            }
+        } else {
+            if (mPresenter != null) {
+                mPresenter.getLeaveListTeacher();
+            }
+        }
     }
 
     @Override
@@ -68,10 +75,34 @@ public class LeaveListActivity extends BaseClassActivity<LeaveListPresenter> imp
 
     @Override
     public void onClick(View view, int position) {
-        if (UserMessage.getInstance().getUserType()==2){
-
+        if (UserMessage.getInstance().getUserType() == 1) {
+            if (vacationVoList.get(position).getStatus() == 0) {
+                Intent intent = new Intent(this, LeaveDetailActivity.class);
+                intent.putExtra("vacationVo", vacationVoList.get(position));
+                startActivity(intent);
+            } else {
+                G.showToast(this, "已经审核完成！");
+            }
         }
-        Intent intent = new Intent(this, LeaveDetailActivity.class);
-        startActivity(intent);
+
+    }
+
+    @Override
+    public int getUserId() {
+        return UserMessage.getInstance().getUserId();
+    }
+
+    @Override
+    public int getTeacherId() {
+        return UserMessage.getInstance().getUserId();
+    }
+
+    @Override
+    public void setVacationVoList(List<VacationVo> vacationVoList) {
+        this.vacationVoList.clear();
+        this.vacationVoList.addAll(vacationVoList);
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }

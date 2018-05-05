@@ -22,17 +22,21 @@ public interface CourseScheduleContract {
         String getTeacherId();
         String getTeacherName();
         String getSchedule();
+        int getScheduleId();
+
         int getNumber();
         int getWeek();
         String getClassRoom();
         String getUserType();
         void setUserInfoList(List<UserInfo> userInfoList);
         void setCourseList(List<CourseVo> courseVoList);
-        void addSuccess();
+        void onSuccess();
+
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
        void addSchedule();
+       void delSchedule();
         void getUserByClassId();
         void getScheduleList();
     }

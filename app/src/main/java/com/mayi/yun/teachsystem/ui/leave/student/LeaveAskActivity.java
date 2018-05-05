@@ -8,8 +8,10 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.DataUtil;
 import com.mayi.yun.teachsystem.utils.DateUtil;
+import com.mayi.yun.teachsystem.utils.G;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +28,7 @@ import butterknife.OnClick;
  * 附加注释：
  * 主要接口：
  */
-public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> {
+public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> implements LeaveAskContract.View, View.OnClickListener {
     /**
      * 用户名字
      */
@@ -87,10 +89,11 @@ public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> {
     /**
      * 位置
      */
-    private int position=0;
+    private int position = 0;
+
     @Override
     public void initInjector() {
-
+        mActivityComponent.inject(this);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> {
     public void initView() {
         setTitleTextId(R.string.leave_ask);
         setSubTitleText("完成");
+        setSubtitleClickListener(this);
         startDate = DateUtil.getNeedTime(8, 0, 0, -1);
         endDate = DateUtil.getNeedTime(8, 0, 0, 0);
         tvStartTime.setText(DateUtil.getFormatHourDate(startDate));    //默认日期
@@ -111,8 +115,10 @@ public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> {
         startTimePickerView = DateUtil.getTimePickerView("请选择开始时间", this, startCalendar, startListener);
         endTimePickerView = DateUtil.getTimePickerView("请选择结束时间", this, endCalendar, endListener);
         courseList = DataUtil.getCauseList();
-        optionsPickerView =DateUtil.getOptionPickerView("请选择请假事由",courseList,position,this,optionsSelectListener);
+        optionsPickerView = DateUtil.getOptionPickerView("请选择请假事由", courseList, position, this, optionsSelectListener);
+        tvName.setText(UserMessage.getInstance().getTruename());
     }
+
     private OptionsPickerView.OnOptionsSelectListener optionsSelectListener = new OptionsPickerView.OnOptionsSelectListener() {
         @Override
         public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -156,5 +162,52 @@ public class LeaveAskActivity extends BaseClassActivity<LeaveAskPresenter> {
     @OnClick(R.id.ll_course)
     public void course() {
         optionsPickerView.show();
+    }
+
+    @Override
+    public String getUserId() {
+        return String.valueOf(UserMessage.getInstance().getUserId());
+    }
+
+    @Override
+    public String getUserName() {
+        return UserMessage.getInstance().getUsername();
+    }
+
+    @Override
+    public String getReason() {
+        return tvCourse.getText().toString();
+    }
+
+    @Override
+    public int getDays() {
+        int days = DateUtil.getBetweenDays(getStartTime(), getEndTime());
+        return days;
+    }
+
+    @Override
+    public String getStartTime() {
+        return tvStartTime.getText().toString();
+    }
+
+    @Override
+    public String getEndTime() {
+        return tvEndTime.getText().toString();
+    }
+
+    @Override
+    public void onSuccess() {
+        finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (G.isEmteny(getReason())) {
+            G.showToast(this, "请假是由不能为空！");
+            return;
+        }
+        if (mPresenter != null) {
+            mPresenter.addLeave();
+        }
     }
 }

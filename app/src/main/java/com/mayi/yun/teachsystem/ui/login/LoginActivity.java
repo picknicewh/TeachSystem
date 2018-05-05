@@ -57,12 +57,11 @@ public class LoginActivity extends BaseClassActivity<LoginPresenter> implements 
             return;
         }
         if (NetworkUtil.isNetworkAvailable()) {
-            mPresenter.login();
+            if (mPresenter != null) {
+                mPresenter.login();
+            }
         } else {
             G.showToast(this, "请连接网络..");
-        }
-        if (mPresenter != null) {
-            mPresenter.login();
         }
     }
 
@@ -87,15 +86,16 @@ public class LoginActivity extends BaseClassActivity<LoginPresenter> implements 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-
     }
-
-
 
     @OnClick(R.id.tv_edit_password)
     public void editPassword() {
         Intent intent = new Intent(this, PasswordActivity.class);
+        if (G.isEmteny(etUsername.getText().toString())){
+            G.showToast(this,"用户名不能为空！");
+            return;
+        }
+        intent.putExtra("id",etUsername.getText().toString());
         startActivity(intent);
-
     }
 }

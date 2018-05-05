@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.my;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.ScheduleVo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -13,10 +16,11 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface MyContract {
     interface View extends BaseContract.BaseView {
-
+        String getUserId();
+        void setScheduleVoList(List<ScheduleVo> scheduleVoList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void getSignListByUserId();
     }
 }

@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.mayi.yun.teachsystem.bean.CourseInfo;
 import com.mayi.yun.teachsystem.bean.UserInfo;
-import com.mayi.yun.teachsystem.bean.VacationVo;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -116,28 +115,7 @@ public class G {
         return courseInfoList;
     }
 
-    public static  List<VacationVo> getVacationVoList(){
-        List<VacationVo> vacationVoList = new ArrayList<>();
-        VacationVo vacationVo = new VacationVo();
-        vacationVo.setTs_name("吕兴瑜");
-        vacationVo.setBack_school_date("2017-05-26 8:00");
-        vacationVo.setDay_number(String.valueOf(1));
-        vacationVo.setVa_content("生病了");
-        vacationVoList.add(vacationVo);
-        VacationVo vacationVo2 = new VacationVo();
-        vacationVo2.setTs_name("梁杰杰");
-        vacationVo2.setBack_school_date("2017-05-28 8:00");
-        vacationVo2.setDay_number(String.valueOf(3));
-        vacationVo2.setVa_content("回家");
-        vacationVoList.add(vacationVo2);
-        VacationVo vacationVo3 = new VacationVo();
-        vacationVo3.setTs_name("常余");
-        vacationVo3.setBack_school_date("2017-05-27 8:00");
-        vacationVo3.setDay_number(String.valueOf(2));
-        vacationVo3.setVa_content("回家");
-        vacationVoList.add(vacationVo3);
-        return vacationVoList;
-    }
+
     /**
      * 调试信息
      */

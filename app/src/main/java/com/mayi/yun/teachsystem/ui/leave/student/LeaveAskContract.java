@@ -13,10 +13,16 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface LeaveAskContract {
     interface View extends BaseContract.BaseView {
-
+        String getUserId();
+        String getUserName();
+        String getReason();
+        int getDays();
+        String getStartTime();
+        String getEndTime();
+        void onSuccess();
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+          void addLeave();
     }
 }

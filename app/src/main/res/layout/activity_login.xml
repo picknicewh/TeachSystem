@@ -61,7 +61,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/tv_edit_password"
-
+        android:visibility="gone"
         android:paddingRight="@dimen/space"
         android:layout_gravity="right"
         android:textColor="@color/colorPrimary"

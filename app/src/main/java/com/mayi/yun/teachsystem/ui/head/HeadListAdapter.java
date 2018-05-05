@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
+import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
+
+import java.util.List;
 
 
 /**
@@ -25,8 +28,10 @@ public class HeadListAdapter extends RecyclerView.Adapter<HeadListAdapter.ViewHo
      */
     private OnItemClickListener onItemClickListener;
 
+    private List<UserInfo> userInfoList;
 
-    public HeadListAdapter() {
+    public HeadListAdapter(List<UserInfo> userInfoList) {
+        this.userInfoList = userInfoList;
     }
 
     @Override
@@ -38,6 +43,9 @@ public class HeadListAdapter extends RecyclerView.Adapter<HeadListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        UserInfo userInfo = userInfoList.get(position);
+        holder.tvName.setText(userInfo.getTruename());
+        holder.tvNumber.setText(userInfo.getUserSn());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +60,7 @@ public class HeadListAdapter extends RecyclerView.Adapter<HeadListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 1;
+        return userInfoList.size();
     }
 
 

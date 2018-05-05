@@ -2,6 +2,9 @@ package com.mayi.yun.teachsystem.ui.attend.student;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.AttendVo;
+
+import java.util.List;
 
 /**
  * 作者： wh
@@ -13,10 +16,11 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface AttentionContractS {
     interface View extends BaseContract.BaseView {
-
+        String getUserId();
+        void setAttendList(List<AttendVo>  attendVoList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void getSignListByUserId();
     }
 }
