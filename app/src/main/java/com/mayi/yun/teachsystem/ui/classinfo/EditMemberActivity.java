@@ -119,7 +119,7 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> i
 
     @Override
     public int getSex() {
-        return rbMen.isChecked()?1:2;
+        return userInfo.getSex();
     }
 
     @Override

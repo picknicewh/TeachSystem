@@ -8,7 +8,6 @@ import android.view.View;
 import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.UserInfo;
-import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.OnItemClickListener;
 
@@ -71,10 +70,6 @@ public class HeadListActivity extends BaseClassActivity<HeadListPresenter> imple
         return "1";
     }
 
-    @Override
-    public String getClassId() {
-        return String.valueOf(UserMessage.getInstance().getClassId());
-    }
 
     @Override
     public void setUserInfoList(List<UserInfo> userInfoList) {

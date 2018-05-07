@@ -61,6 +61,15 @@ public interface ApiService {
     Observable<Common2<List<UserInfo>>> getUserByClassId(@Field("classId") String classId, @Field("userType") String userType);
 
     /**
+     * 根据班级和用户类型 查询所有的人员 （userType 默认3        1 班主任 2 普通老师 3 学生 4 管理员）
+
+     * @param userType
+     */
+    @POST("member/selectUserByClassId")
+    @FormUrlEncoded
+    Observable<Common2<List<UserInfo>>> getUserByClassId( @Field("userType") String userType);
+
+    /**
      * 查看当前课程未考勤的学生列表
      */
     @POST("member/selectUserList4Sign")

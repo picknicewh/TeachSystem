@@ -33,7 +33,7 @@ public class HeadListPresenter extends BasePresenter<HeadListContract.View> impl
     public void getUserByClassId() {
         mView.showProgress();
         RetrofitManager.create(ApiService.class, ApiService.HOST)
-                .getUserByClassId(mView.getClassId(), mView.getUserType())
+                .getUserByClassId( mView.getUserType())
                 .compose(RxSchedulers.<Common2<List<UserInfo>>>applySchedulers())
                 .compose(mView.<Common2<List<UserInfo>>>bindToLife())
                 .subscribe(new Consumer<Common2<List<UserInfo>>>() {

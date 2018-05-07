@@ -17,7 +17,6 @@ import java.util.List;
 public interface HeadListContract {
     interface View extends BaseContract.BaseView {
         String getUserType();
-        String getClassId();
         void setUserInfoList(List<UserInfo> userInfoList);
     }
     interface Presenter extends BaseContract.BasePresenter<View> {
