@@ -16,7 +16,7 @@ import com.mayi.yun.teachsystem.utils.G;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
+public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> implements View.OnClickListener ,EditMemberContract.View{
 
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
@@ -66,6 +66,7 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
         }else {
             llRole.setVisibility(View.GONE);
         }
+        setSubtitleClickListener(this);
         userInfo = getIntent().getParcelableExtra("userInfo");
         tvName.setText(userInfo.getTruename());
         tvPhone.setText(userInfo.getPhone());
@@ -79,6 +80,61 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> {
             rbMen.setVisibility(View.GONE);
             rvFeman.setVisibility(View.VISIBLE);
         }
+    }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public int getUserType() {
+        return userInfo.getUserType();
+    }
+
+    @Override
+    public String getClassId() {
+        return String.valueOf(userInfo.getClassId());
+    }
+
+    @Override
+    public String getUserSn() {
+        return userInfo.getUserSn();
+    }
+
+    @Override
+    public String getPhone() {
+        return tvPhone.getText().toString();
+    }
+
+    @Override
+    public String getTrueName() {
+        return userInfo.getTruename();
+    }
+
+    @Override
+    public String getAvatar() {
+        return userInfo.getAvatar();
+    }
+
+    @Override
+    public int getSex() {
+        return rbMen.isChecked()?1:2;
+    }
+
+    @Override
+    public String getPosition() {
+        return userInfo.getPosition();
+    }
+
+    @Override
+    public String getBirthday() {
+        return userInfo.getBirthday();
+    }
+
+
+    @Override
+    public void success() {
+         finish();
     }
 }

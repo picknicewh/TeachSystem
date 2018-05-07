@@ -13,10 +13,18 @@ import com.mayi.yun.teachsystem.base.BaseContract;
  */
 public interface EditMemberContract {
     interface View extends BaseContract.BaseView {
-
+        int getUserType();
+        String getClassId();
+        String getUserSn();
+        String getPhone();
+        String getTrueName();
+        String getAvatar();
+        int getSex();
+        String getPosition();
+        String getBirthday();
+        void success();
     }
-
     interface Presenter extends BaseContract.BasePresenter<View> {
-
+        void addMember();
     }
 }
