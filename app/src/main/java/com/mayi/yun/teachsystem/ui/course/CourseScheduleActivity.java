@@ -96,6 +96,7 @@ public class CourseScheduleActivity extends BaseClassActivity<CourseSchedulePres
         rvWeek.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvWeek.setAdapter(adapter);
         adapter.initData(DateUtil.getWeekOfPosition());
+
         adapter.setOnItemClickListener(this);
         courseVoList = new ArrayList<>();
         courseAdapter = new CourseScheduleAdapter(this, courseList);

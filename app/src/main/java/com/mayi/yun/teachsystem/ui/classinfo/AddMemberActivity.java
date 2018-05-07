@@ -125,7 +125,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     /**
      * 选择角色类型
      */
-    private int role;
+    private int role=3;
     /**
      * 图片选择对话框
      */
@@ -172,8 +172,9 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         className = getIntent().getStringExtra("className");
         tvClass.setText(className);
         dialog = new PictureChooseDialog(this);
-        positionList = DataUtil.getPositionList();
+
         courseList = new ArrayList<>();
+        positionList = DataUtil.getPositionList();
         optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
 
         mDate = DateUtil.getNeedTime(16, 0, 0, 0);
@@ -181,8 +182,10 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         tvBirthday.setText(date);
         mCalendar.setTime(mDate);//默认日期选中的开始时间
         mTimePickerView = DateUtil.getDatePickerView("选择生日时间", this, mCalendar, TimeListener);
-
-
+       rgRole.setOnCheckedChangeListener(this);
+       if (mPresenter!=null){
+           mPresenter.getScheduleList();
+       }
     }
 
 
@@ -200,6 +203,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     public void onCheckedChanged(RadioGroup radioGroup, int id) {
         switch (id) {
             case R.id.rb_student:
+
                 optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
                 tvPositionText.setText("职务");
                 tvPosition.setText("请选择职务");
@@ -219,10 +223,10 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         public void onOptionsSelect(int options1, int options2, int options3, View v) {
             position = options1;
             switch (role) {
-                case 0:
+                case 3:
                     tvPosition.setText(positionList.get(options1));
                     break;
-                case 1:
+                case 2:
                     tvPosition.setText(courseList.get(options1));
                     break;
             }
@@ -232,8 +236,6 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
 
 
     @OnClick(R.id.tv_position)
-
-
     public void position() {
         optionsPickerView.show();
     }
@@ -321,7 +323,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
 
     @Override
     public int getSex() {
-        return rbMen.isChecked() ? 1 : 0;
+        return rbMen.isChecked() ? 1 : 2;
     }
 
     @Override
@@ -347,11 +349,8 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     @Override
     public void setCourseList(List<CourseVo> courseVoList) {
         for (int i = 0; i < courseVoList.size(); i++) {
-            positionList.add(courseVoList.get(i).getSchedule());
+            courseList.add(courseVoList.get(i).getSchedule());
         }
-        optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
-
-
     }
 
     @Override
