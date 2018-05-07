@@ -50,4 +50,6 @@ public class ClassMemberInfoPresenter extends BasePresenter<ClassMemberInfoContr
             }
         }));
     }
+
+
 }

@@ -26,11 +26,12 @@ import java.util.List;
 public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-   private List<UserInfo> userInfoList;
-   private Context context;
+    private List<UserInfo> userInfoList;
+    private Context context;
+
     public ClassMemberAdapter(List<UserInfo> userInfoList, Context context) {
-      this.userInfoList = userInfoList;
-      this.context = context;
+        this.userInfoList = userInfoList;
+        this.context = context;
     }
 
     @Override
@@ -41,11 +42,11 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
 
     @Override
     public void onBindViewHolder(ClassMemberAdapter.ViewHolder holder, final int position) {
-         UserInfo userInfo = userInfoList.get(position);
-         holder.tvName.setText(userInfo.getTruename());
-         GlideUtils.loadImageView(context,userInfo.getAvatar(),holder.ivImage);
-         holder.tvNumber.setText(userInfo.getUserSn());
-         holder.tvPosition.setText(userInfo.getPosition());
+        UserInfo userInfo = userInfoList.get(position);
+        holder.tvName.setText(userInfo.getTruename());
+        GlideUtils.loadImageView(context, userInfo.getAvatar(), holder.ivImage);
+        holder.tvNumber.setText(userInfo.getUserSn());
+        holder.tvPosition.setText(userInfo.getPosition());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +55,7 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
                 }
             }
         });
+
     }
 
     @Override
@@ -67,6 +69,7 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
         ImageView ivImage;
         TextView tvNumber;
         TextView tvPosition;
+
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
@@ -77,7 +80,10 @@ public class ClassMemberAdapter extends RecyclerView.Adapter<ClassMemberAdapter.
     }
 
 
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+
 }

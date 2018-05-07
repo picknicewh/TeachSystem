@@ -284,7 +284,7 @@
                 android:layout_marginRight="@dimen/space_x2"
                 android:text="职务" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_position"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -292,9 +292,8 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:drawablePadding="@dimen/space_x0.5"
-                android:drawableRight="@mipmap/ic_arrow_down"
                 android:gravity="right"
-                android:hint="请选择职务"
+                android:hint="请输入职务"
                 android:textSize="@dimen/ts_medium" />
         </LinearLayout>
 

@@ -1,5 +1,11 @@
 package com.mayi.yun.teachsystem.ui.head;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -11,10 +17,16 @@ import com.mayi.yun.teachsystem.R;
 import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.ClassVo;
 import com.mayi.yun.teachsystem.bean.UserInfo;
+import com.mayi.yun.teachsystem.network.GlideUtils;
 import com.mayi.yun.teachsystem.utils.Constant;
 import com.mayi.yun.teachsystem.utils.DateUtil;
+import com.mayi.yun.teachsystem.utils.FileUtils;
 import com.mayi.yun.teachsystem.utils.G;
+import com.mayi.yun.teachsystem.utils.PermissionsActivity;
+import com.mayi.yun.teachsystem.widget.ConformDialog;
+import com.mayi.yun.teachsystem.widget.PictureChooseDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,8 +34,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> implements View.OnClickListener, EditHeadContract.View {
+import static com.mayi.yun.teachsystem.utils.PermissionsChecker.REQUEST_CODE;
+
+public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> implements View.OnClickListener, EditHeadContract.View, ConformDialog.OnConformCallBack {
 
     @BindView(R.id.tv_name)
     EditText tvName;
@@ -39,6 +54,8 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
     TextView tvClass;
     @BindView(R.id.tv_phone)
     EditText tvPhone;
+    @BindView(R.id.iv_head)
+    CircleImageView ivHead;
     private int operation;
     private UserInfo userInfo;
     /**
@@ -68,6 +85,19 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
     private int position = 0;
     private String classId = "";
     private String avatar = "";
+    /**
+     * 图片选择对话框
+     */
+    private PictureChooseDialog dialog;
+    /**
+     * 图片路径
+     */
+    private String imagePath;
+    /**
+     * 图片地址
+     */
+    private String imageUrl = "";
+    private ConformDialog conformDialog;
 
     @Override
     public void initInjector() {
@@ -83,8 +113,7 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
     public void initView() {
         operation = getIntent().getIntExtra("operation", 1);
         userInfo = getIntent().getParcelableExtra("userInfo");
-        setSubTitleText("完成");
-        setSubtitleClickListener(this);
+
         switch (operation) {
             case Constant.ADD:
                 setTitleText("添加班主任");
@@ -101,13 +130,17 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
                 break;
             case Constant.EDIT:
                 setTitleText("编辑班主任");
+                conformDialog = new ConformDialog(this);
+                conformDialog.setOnConformCallBack(this);
+                dialog = new PictureChooseDialog(this);
                 tvBirthday.setText(userInfo.getBirthday());
-                tvClass.setText(userInfo.getClassName());
+                tvClass.setText(userInfo.getClassId() == 1 ? "信息技术" : "软件工程");
                 tvNumber.setText(userInfo.getUserSn());
                 tvName.setText(userInfo.getTruename());
                 tvPhone.setText(userInfo.getPhone());
                 rbMen.setChecked(userInfo.getSex() == 1);
                 rvFeman.setChecked(userInfo.getSex() == 0);
+                GlideUtils.loadImageView(this, userInfo.getAvatar(), ivHead);
                 classId = String.valueOf(userInfo.getClassId());
                 avatar = userInfo.getAvatar();
                 break;
@@ -158,8 +191,8 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
 
     @Override
     public String getClassId() {
-        if (G.isEmteny(classId)){
-            classId =  String.valueOf(classList.get(position).getClassId());
+        if (G.isEmteny(classId)) {
+            classId = String.valueOf(classList.get(position).getClassId());
         }
         return classId;
     }
@@ -181,7 +214,10 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
 
     @Override
     public String getAvatar() {
-        return avatar;
+        if (G.isEmteny(imageUrl)) {
+            imageUrl = avatar;
+        }
+        return imageUrl;
     }
 
     @Override
@@ -202,6 +238,21 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
     }
 
     @Override
+    public String getPath() {
+        return imagePath;
+    }
+
+    @Override
+    public void setImagePath(String imagePath) {
+        this.imageUrl = imagePath;
+    }
+
+    @Override
+    public int getUserId() {
+        return userInfo.getUserId();
+    }
+
+    @Override
     public void success() {
         finish();
     }
@@ -219,6 +270,89 @@ public class EditHeadActivity extends BaseClassActivity<EditHeadPresenter> imple
 
     @OnClick(R.id.tv_class)
     public void Class() {
-        optionsPickerView.show();
+        if (optionsPickerView != null) {
+            optionsPickerView.show();
+        }
+    }
+
+
+    @OnClick({R.id.tv_del, R.id.tv_save})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_del:
+                conformDialog.show();
+                conformDialog.setTitle("确认删除该用户信息吗？");
+                source = 0;
+                break;
+            case R.id.tv_save:
+                conformDialog.show();
+                conformDialog.setTitle("确认修改该用户信息吗？");
+                source = 1;
+                break;
+        }
+    }
+
+    private int source = 0;
+
+    @OnClick(R.id.iv_head)
+    public void head() {
+        dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //获取图片路径
+            if (requestCode == Constant.RESULT_IMAG) {
+                imagePath = FileUtils.getChoosePicture(this, data.getData());
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                ivHead.setImageBitmap(bitmap);
+            } else if (requestCode == Constant.RESULT_CAMERA) {
+                update(imagePath);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    imagePath = dialog.getImagePath();
+                    FileUtils.savePhoto(imagePath, null);
+                    ivHead.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+                } else {
+                    imagePath = FileUtils.getUploadPhotoFile(this);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    FileUtils.savePhoto(imagePath, bitmap);
+                    ivHead.setImageBitmap(bitmap);
+                }
+            }
+            G.log("xxxxdddxxxxxxx" + imagePath);
+            if (mPresenter != null) {
+                mPresenter.updateImage();
+            }
+        }
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+                G.showToast(this, "权限没有授取，本次操作取消，请到权限中心授权");
+            }
+        }
+    }
+
+    private void update(String imagePath) {
+        //这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(new File(imagePath));
+        intent.setData(uri);
+    }
+
+    @Override
+    public void onCallBack() {
+        switch (source) {
+            case 0:
+                if (mPresenter != null) {
+                    mPresenter.delUser();
+                }
+                break;
+            case 1:
+                if (mPresenter != null) {
+                    mPresenter.updateUser();
+                }
+                break;
+        }
     }
 }

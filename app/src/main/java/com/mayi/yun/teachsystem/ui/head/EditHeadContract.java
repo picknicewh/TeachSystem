@@ -17,20 +17,43 @@ import java.util.List;
 public interface EditHeadContract {
     interface View extends BaseContract.BaseView {
         int getUserType();
+
         String getClassId();
+
         String getUserSn();
+
         String getPhone();
+
         String getTrueName();
+
         String getAvatar();
+
         int getSex();
+
         String getPosition();
+
         String getBirthday();
+
+        String getPath();
+
+        void setImagePath(String imagePath);
+
+        int getUserId();
+
         void success();
+
         void setClassList(List<ClassVo> classList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
         void addMember();
+
         void getClassList();
+
+        void delUser();
+
+        void updateImage();
+
+        void updateUser();
     }
 }

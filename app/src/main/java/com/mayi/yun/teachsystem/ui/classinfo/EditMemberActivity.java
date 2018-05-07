@@ -1,5 +1,11 @@
 package com.mayi.yun.teachsystem.ui.classinfo;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -11,12 +17,22 @@ import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.network.GlideUtils;
+import com.mayi.yun.teachsystem.utils.Constant;
+import com.mayi.yun.teachsystem.utils.FileUtils;
 import com.mayi.yun.teachsystem.utils.G;
+import com.mayi.yun.teachsystem.utils.PermissionsActivity;
+import com.mayi.yun.teachsystem.widget.ConformDialog;
+import com.mayi.yun.teachsystem.widget.PictureChooseDialog;
+
+import java.io.File;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> implements View.OnClickListener ,EditMemberContract.View{
+import static com.mayi.yun.teachsystem.utils.PermissionsChecker.REQUEST_CODE;
+
+public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> implements View.OnClickListener, EditMemberContract.View, ConformDialog.OnConformCallBack {
 
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
@@ -46,11 +62,25 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> i
     TextView tvPosition;
     @BindView(R.id.tv_dept)
     TextView tvDept;
+    @BindView(R.id.ll_edit)
+    LinearLayout llEdit;
     private UserInfo userInfo;
-
+    private ConformDialog conformDialog;
+    /**
+     * 图片选择对话框
+     */
+    private PictureChooseDialog dialog;
+    /**
+     * 图片路径
+     */
+    private String imagePath;
+    /**
+     * 图片地址
+     */
+    private String imageUrl = "";
     @Override
     public void initInjector() {
-
+        mActivityComponent.inject(this);
     }
 
     @Override
@@ -62,24 +92,30 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> i
     public void initView() {
         setTitleText("信息详情");
         if (UserMessage.getInstance().getUserType() == 1) {
-            setSubTitleText("完成");
-        }else {
+            llEdit.setVisibility(View.VISIBLE);
+        } else {
+            llRole.setVisibility(View.GONE);
             llRole.setVisibility(View.GONE);
         }
         setSubtitleClickListener(this);
+        dialog = new PictureChooseDialog(this);
         userInfo = getIntent().getParcelableExtra("userInfo");
         tvName.setText(userInfo.getTruename());
         tvPhone.setText(userInfo.getPhone());
         tvBirthday.setText(userInfo.getBirthday());
         tvPosition.setText(G.isEmteny(userInfo.getPosition()) ? "无" : userInfo.getPosition());
         GlideUtils.loadImageView(this, userInfo.getAvatar(), ivHead);
-        if (userInfo.getSex()==1){
-            rbMen.setVisibility(View.VISIBLE);
-            rvFeman.setVisibility(View.GONE);
-        }else {
-            rbMen.setVisibility(View.GONE);
-            rvFeman.setVisibility(View.VISIBLE);
+        rbStudent.setChecked(userInfo.getUserType() == 3);
+        rbTeacher.setChecked(userInfo.getUserType() == 2);
+        if (userInfo.getSex() == 1) {
+            rbMen.setChecked(true);
+            rvFeman.setChecked(false);
+        } else {
+            rbMen.setChecked(false);
+            rvFeman.setChecked(true);
         }
+        conformDialog = new ConformDialog(this);
+        conformDialog.setOnConformCallBack(this);
     }
 
     @Override
@@ -88,8 +124,13 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> i
     }
 
     @Override
+    public int getUserId() {
+        return userInfo.getUserId();
+    }
+
+    @Override
     public int getUserType() {
-        return userInfo.getUserType();
+        return rbStudent.isChecked() ? 3 : 2;
     }
 
     @Override
@@ -109,32 +150,126 @@ public class EditMemberActivity extends BaseClassActivity<EditMemberPresenter> i
 
     @Override
     public String getTrueName() {
-        return userInfo.getTruename();
+        return tvName.getText().toString();
     }
 
     @Override
     public String getAvatar() {
-        return userInfo.getAvatar();
+        if (G.isEmteny(imageUrl)){
+            imageUrl = userInfo.getAvatar();
+        }
+        return imageUrl;
     }
 
     @Override
     public int getSex() {
-        return userInfo.getSex();
+        return rbMen.isChecked() ? 1 : 2;
+    }
+
+    @Override
+    public String getPath() {
+        return imagePath;
     }
 
     @Override
     public String getPosition() {
-        return userInfo.getPosition();
+        return tvPosition.getText().toString();
     }
 
     @Override
     public String getBirthday() {
-        return userInfo.getBirthday();
+        return tvBirthday.getText().toString();
+    }
+
+    @Override
+    public void setImagePath(String path) {
+     this.imageUrl = path;
     }
 
 
     @Override
     public void success() {
-         finish();
+        finish();
+    }
+
+
+    @OnClick({R.id.tv_del, R.id.tv_save})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_del:
+                conformDialog.show();
+                conformDialog.setTitle("确认删除该用户信息吗？");
+                source = 0;
+                break;
+            case R.id.tv_save:
+                conformDialog.show();
+                conformDialog.setTitle("确认修改该用户信息吗？");
+                source = 1;
+                break;
+        }
+    }
+    /**
+     * 操作
+     */
+    private int source = 0;
+
+    @Override
+    public void onCallBack() {
+        switch (source) {
+            case 0:
+                if (mPresenter != null) {
+                    mPresenter.delUser();
+                }
+                break;
+            case 1:
+                if (mPresenter != null) {
+                    mPresenter.updateUser();
+                }
+                break;
+        }
+    }
+    @OnClick(R.id.iv_head)
+    public void head() {
+        dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //获取图片路径
+            if (requestCode == Constant.RESULT_IMAG) {
+                imagePath = FileUtils.getChoosePicture(this, data.getData());
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                ivHead.setImageBitmap(bitmap);
+            } else if (requestCode == Constant.RESULT_CAMERA) {
+                update(imagePath);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    imagePath = dialog.getImagePath();
+                    FileUtils.savePhoto(imagePath, null);
+                    ivHead.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+                } else {
+                    imagePath = FileUtils.getUploadPhotoFile(this);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    FileUtils.savePhoto(imagePath, bitmap);
+                    ivHead.setImageBitmap(bitmap);
+                }
+            }
+            G.log("xxxxdddxxxxxxx" + imagePath);
+            if (mPresenter != null) {
+                mPresenter.updateImage();
+            }
+        }
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+                G.showToast(this, "权限没有授取，本次操作取消，请到权限中心授权");
+            }
+        }
+    }
+    private void update(String imagePath) {
+        //这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(new File(imagePath));
+        intent.setData(uri);
     }
 }

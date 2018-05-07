@@ -59,6 +59,12 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
         rvClassInfo.setLayoutManager(new LinearLayoutManager(this));
         rvClassInfo.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (mPresenter != null) {
             mPresenter.getUserByClassId();
         }
@@ -107,4 +113,5 @@ public class ClassMemberInfoActivity extends BaseClassActivity<ClassMemberInfoPr
             adapter.notifyDataSetChanged();
         }
     }
+
 }

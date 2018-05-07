@@ -2,6 +2,7 @@ package com.mayi.yun.teachsystem.ui.attend.teacher;
 
 
 import com.mayi.yun.teachsystem.base.BaseContract;
+import com.mayi.yun.teachsystem.bean.AttendVo;
 import com.mayi.yun.teachsystem.bean.CourseVo;
 
 import java.util.List;
@@ -17,10 +18,19 @@ import java.util.List;
 public interface CourseListContract {
     interface View extends BaseContract.BaseView {
         String getTeacherId();
+
+        int getClassId();
+
+        int getScheduleId();
+
         void setCourseList(List<CourseVo> courseVoList);
+
+        void setAttendVoList(List<AttendVo> attendVoList);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
         void getCourseList();
+
+        void getSignListByParams();
     }
 }

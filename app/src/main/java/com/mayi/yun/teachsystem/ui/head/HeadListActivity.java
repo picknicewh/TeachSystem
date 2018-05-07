@@ -44,6 +44,12 @@ public class HeadListActivity extends BaseClassActivity<HeadListPresenter> imple
         rvHead.setLayoutManager(new LinearLayoutManager(this));
         rvHead.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (mPresenter != null) {
             mPresenter.getUserByClassId();
         }

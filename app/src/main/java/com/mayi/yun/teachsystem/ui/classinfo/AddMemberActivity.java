@@ -19,7 +19,6 @@ import com.mayi.yun.teachsystem.base.BaseClassActivity;
 import com.mayi.yun.teachsystem.bean.CourseVo;
 import com.mayi.yun.teachsystem.db.UserMessage;
 import com.mayi.yun.teachsystem.utils.Constant;
-import com.mayi.yun.teachsystem.utils.DataUtil;
 import com.mayi.yun.teachsystem.utils.DateUtil;
 import com.mayi.yun.teachsystem.utils.FileUtils;
 import com.mayi.yun.teachsystem.utils.G;
@@ -89,7 +88,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
      * 职务
      */
     @BindView(R.id.tv_position)
-    TextView tvPosition;
+    EditText tvPosition;
     /**
      * 电话号码
      */
@@ -108,7 +107,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
     /**
      * 选项
      */
-    private OptionsPickerView optionsPickerView;
+   // private OptionsPickerView optionsPickerView;
 
     /**
      * 学生职务列表
@@ -174,8 +173,8 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         dialog = new PictureChooseDialog(this);
 
         courseList = new ArrayList<>();
-        positionList = DataUtil.getPositionList();
-        optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
+     //   positionList = DataUtil.getPositionList();
+    //    optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
 
         mDate = DateUtil.getNeedTime(16, 0, 0, 0);
         String date = DateUtil.getChinaFormatDate(mDate);
@@ -204,15 +203,15 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
         switch (id) {
             case R.id.rb_student:
 
-                optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
+             //   optionsPickerView = DateUtil.getOptionPickerView("请选择职务", positionList, position, this, optionsSelectListener);
                 tvPositionText.setText("职务");
-                tvPosition.setText("请选择职务");
+                tvPosition.setHint("请输入职务");
                 role = 3;
                 break;
             case R.id.rb_teacher:
-                optionsPickerView = DateUtil.getOptionPickerView("请选择授课", courseList, position, this, optionsSelectListener);
+           //     optionsPickerView = DateUtil.getOptionPickerView("请选择授课", courseList, position, this, optionsSelectListener);
                 tvPositionText.setText("授课");
-                tvPosition.setText("请选择授课");
+                tvPosition.setHint("请输入授课");
                 role = 2;
                 break;
         }
@@ -237,7 +236,7 @@ public class AddMemberActivity extends BaseClassActivity<AddMemberPresenter> imp
 
     @OnClick(R.id.tv_position)
     public void position() {
-        optionsPickerView.show();
+     //   optionsPickerView.show();
     }
 
     @OnClick(R.id.iv_head)

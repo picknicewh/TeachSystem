@@ -13,6 +13,7 @@ import com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.AddMemberActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
+import com.mayi.yun.teachsystem.ui.classinfo.EditMemberActivity;
 import com.mayi.yun.teachsystem.ui.course.CourseScheduleActivity;
 import com.mayi.yun.teachsystem.ui.head.EditHeadActivity;
 import com.mayi.yun.teachsystem.ui.head.HeadListActivity;
@@ -78,4 +79,5 @@ public interface ActivityComponent {
 
     void  inject(PasswordActivity passwordActivity);
 
+    void  inject(EditMemberActivity editMemberActivity);
 }

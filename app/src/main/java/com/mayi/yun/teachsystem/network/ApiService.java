@@ -40,6 +40,7 @@ public interface ApiService {
     @Multipart
     @POST("/member/uploadFile")
     Observable<Common<String>> uploadFile(@Part MultipartBody.Part part);
+
     /**
      * 登录
      *
@@ -62,12 +63,12 @@ public interface ApiService {
 
     /**
      * 根据班级和用户类型 查询所有的人员 （userType 默认3        1 班主任 2 普通老师 3 学生 4 管理员）
-
+     *
      * @param userType
      */
     @POST("member/selectUserByClassId")
     @FormUrlEncoded
-    Observable<Common2<List<UserInfo>>> getUserByClassId( @Field("userType") String userType);
+    Observable<Common2<List<UserInfo>>> getUserByClassId(@Field("userType") String userType);
 
     /**
      * 查看当前课程未考勤的学生列表
@@ -75,7 +76,6 @@ public interface ApiService {
     @POST("member/selectUserList4Sign")
     @FormUrlEncoded
     Observable<Common<List<UserInfo>>> getUserListSign(@Field("scheduleId") int scheduleId);
-
 
 
     @POST("member/add")
@@ -95,6 +95,7 @@ public interface ApiService {
     @POST("member/addSchedule")
     @FormUrlEncoded
     Observable<Common<String>> addSchedule(@FieldMap Map<String, Object> params);
+
     /**
      * 删除课程表
      */
@@ -182,6 +183,14 @@ public interface ApiService {
     @POST("/member/updateUser")
     @FormUrlEncoded
     Observable<Common<String>> updateUser(@FieldMap Map<String, Object> params);
+
+    /**
+     * 删除信息
+     */
+    @POST("/member/deleteUser")
+    @FormUrlEncoded
+    Observable<Common<String>> deleteUser(@Field("userId") int userId);
+
 
 
 }
