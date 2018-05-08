@@ -14,7 +14,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public interface AttentionContractT {
+public interface UnAttentionContract {
     interface View extends BaseContract.BaseView {
         String getUserType();
         String getClassId();

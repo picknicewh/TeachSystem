@@ -39,7 +39,7 @@ public class MyAttentionAdapter extends RecyclerView.Adapter<MyAttentionAdapter.
     public void onBindViewHolder(MyAttentionAdapter.ViewHolder holder, final int position) {
         ScheduleVo scheduleVo = scheduleVoList.get(position);
         holder.tvCourse.setText(scheduleVo.getScheduleName());
-        holder.tvStatus.setText(scheduleVo.getIsSign() == 1 ? "已考勤" : "未考勤");
+        holder.tvStatus.setText(scheduleVo.getIsSign() == 1 ? "到场" : "缺席");
         holder.tvTime.setText(scheduleVo.getCreateTime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -70,12 +70,13 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/tv_nodata"
             android:textSize="@dimen/ts_large"
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/img_attend_end"
-            android:text="你已经点名完成啦!，点击重新点名" />
+            android:text="你已经点名完成啦!" />
     </LinearLayout>
 
     <LinearLayout

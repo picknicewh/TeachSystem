@@ -22,9 +22,9 @@ import javax.inject.Inject;
  * 附加注释：
  * 主要接口：
  */
-public class AttentionPresenterT extends BasePresenter<AttentionContractT.View> implements AttentionContractT.Presenter {
+public class UnAttentionPresenter extends BasePresenter<UnAttentionContract.View> implements UnAttentionContract.Presenter {
     @Inject
-    public AttentionPresenterT() {
+    public UnAttentionPresenter() {
 
     }
 

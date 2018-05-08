@@ -40,7 +40,7 @@ public class AttentionAdapterS extends RecyclerView.Adapter<AttentionAdapterS.Vi
     public void onBindViewHolder(AttentionAdapterS.ViewHolder holder, final int position) {
         AttendVo attendVo = attendVoList.get(position);
         holder.tvCourse.setText(attendVo.getSchedule());
-        holder.tvStatus.setText(attendVo.getIsSign() == 1 ? "已考勤" : "未考勤");
+        holder.tvStatus.setText(attendVo.getIsSign() == 1 ? "到场" : "缺席");
         String time = DateUtil.getCourse(attendVo.getNumber()) + "(" + DateUtil.getCouresTime(attendVo.getNumber()) + ")";
         holder.tvTime.setText(time);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

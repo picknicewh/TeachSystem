@@ -23,25 +23,25 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class AttentionAdapterT extends RecyclerView.Adapter<AttentionAdapterT.ViewHolder> {
+public class UnAttentionAdapter extends RecyclerView.Adapter<UnAttentionAdapter.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
     private List<UserInfo> userInfoList;
     private Context context;
 
-    public AttentionAdapterT(List<UserInfo> userInfoList, Context context) {
+    public UnAttentionAdapter(List<UserInfo> userInfoList, Context context) {
         this.userInfoList = userInfoList;
         this.context = context;
     }
 
     @Override
-    public AttentionAdapterT.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UnAttentionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_attend_t, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AttentionAdapterT.ViewHolder holder, final int position) {
+    public void onBindViewHolder(UnAttentionAdapter.ViewHolder holder, final int position) {
         UserInfo userInfo = userInfoList.get(position);
         holder.tvName.setText(userInfo.getTruename());
         holder.tvNumber.setText(userInfo.getUserSn());

@@ -8,8 +8,8 @@ import com.mayi.yun.teachsystem.di.scope.ContextLife;
 import com.mayi.yun.teachsystem.di.scope.PerActivity;
 import com.mayi.yun.teachsystem.ui.attend.head.AttentionActivityH;
 import com.mayi.yun.teachsystem.ui.attend.student.AttentionActivityS;
-import com.mayi.yun.teachsystem.ui.attend.teacher.AttentionActivityT;
 import com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity;
+import com.mayi.yun.teachsystem.ui.attend.teacher.UnAttentionFragment;
 import com.mayi.yun.teachsystem.ui.classinfo.AddMemberActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassListActivity;
 import com.mayi.yun.teachsystem.ui.classinfo.ClassMemberInfoActivity;
@@ -52,7 +52,7 @@ public interface ActivityComponent {
 
     void inject(AttentionActivityS attentionActivityS);
 
-    void inject(AttentionActivityT attentionActivityT);
+    void inject(UnAttentionFragment attentionActivityT);
 
 
     void inject(AttentionActivityH attentionActivityH);
@@ -77,7 +77,9 @@ public interface ActivityComponent {
 
     void inject(EditHeadActivity editHeadActivity);
 
-    void  inject(PasswordActivity passwordActivity);
+    void inject(PasswordActivity passwordActivity);
 
-    void  inject(EditMemberActivity editMemberActivity);
+    void inject(EditMemberActivity editMemberActivity);
+
+   // void inject(AttendResultActivity attendResultActivity);
 }

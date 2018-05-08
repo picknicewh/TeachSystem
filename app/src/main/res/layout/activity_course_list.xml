@@ -6,44 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.mayi.yun.teachsystem.ui.attend.teacher.CourseListActivity">
 
-    <RadioGroup
-        android:id="@+id/rg_sign"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_course"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_unsign"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center"
-            android:padding="@dimen/space"
-            android:text="未考勤"
-            android:textColor="@color/textcolor" />
-
-        <View
-            android:layout_width="@dimen/space_x0.1"
-            android:layout_height="match_parent"
-            android:background="@color/divine_line_color" />
-
-        <RadioButton
-            android:id="@+id/rb_sign"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="@dimen/space"
-            android:text="已考勤"
-            android:textColor="@color/textcolor" />
-    </RadioGroup>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:text="今日无课！"
+        android:textSize="@dimen/ts_large"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

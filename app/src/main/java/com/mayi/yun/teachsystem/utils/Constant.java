@@ -86,4 +86,16 @@ public class Constant {
      * 进入学生列表来源----我的-考勤记录
      */
     public static final int SOURCE_ATTEND_LIST = 4;
+
+
+    /**
+     * 已考勤
+     */
+    public static final int HAS_ATTEND = 1;
+
+    /**
+     * 未考勤
+     */
+    public static final int UN_ATTEND = 0;
+
 }

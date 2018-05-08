@@ -1,6 +1,7 @@
 package com.mayi.yun.teachsystem.network;
 
 
+import com.mayi.yun.teachsystem.bean.AttendUserInfo;
 import com.mayi.yun.teachsystem.bean.AttendVo;
 import com.mayi.yun.teachsystem.bean.ClassVo;
 import com.mayi.yun.teachsystem.bean.Common;
@@ -132,7 +133,7 @@ public interface ApiService {
      */
     @POST("member/selectSignListByParams")
     @FormUrlEncoded
-    Observable<Common<List<AttendVo>>> getSignListByParams(@FieldMap Map<String, Object> params);
+    Observable<Common<List<AttendUserInfo>>> getSignListByParams(@FieldMap Map<String, Object> params);
     //teacherId   classId   scheduleId
 
     /**

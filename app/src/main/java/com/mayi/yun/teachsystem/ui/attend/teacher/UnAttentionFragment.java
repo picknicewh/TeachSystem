@@ -1,5 +1,6 @@
 package com.mayi.yun.teachsystem.ui.attend.teacher;
 
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -8,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mayi.yun.teachsystem.R;
-import com.mayi.yun.teachsystem.base.BaseClassActivity;
+import com.mayi.yun.teachsystem.base.BaseFragment;
 import com.mayi.yun.teachsystem.bean.UserInfo;
 import com.mayi.yun.teachsystem.utils.DateUtil;
 
@@ -18,12 +19,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import me.yuqirong.cardswipelayout.CardConfig;
 import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
 import me.yuqirong.cardswipelayout.CardLayoutManager;
 import me.yuqirong.cardswipelayout.OnSwipeListener;
 
-public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> implements OnSwipeListener<UserInfo>, AttentionContractT.View {
+public class UnAttentionFragment extends BaseFragment<UnAttentionPresenter> implements OnSwipeListener<UserInfo>, UnAttentionContract.View {
 
 
     @BindView(R.id.tv_class)
@@ -42,7 +44,10 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
     TextView ivUnAttend;
     @BindView(R.id.ll_nodata)
     LinearLayout llNodata;
-    private AttentionAdapterT attentionAdapterT;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
+    Unbinder unbinder;
+    private UnAttentionAdapter attentionAdapterT;
     private List<UserInfo> userInfoList;
     private UserInfo currentUserInfo;
     /**
@@ -50,32 +55,49 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
      */
     private int sign;
 
+    private Bundle bundle;
+
+    public static UnAttentionFragment newInstance(int scheduleId, int classId, String className) {
+        UnAttentionFragment fragment = new UnAttentionFragment();
+        Bundle args = new Bundle();
+        args.putInt("scheduleId", scheduleId);
+        args.putInt("classId", classId);
+        args.putString("className", className);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void initInjector() {
-        mActivityComponent.inject(this);
+        mFragmentComponent.inject(this);
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_attend_t;
-    }
-
-    @Override
-    public void initView() {
-        setTitleTextId(R.string.attend_p);
-        initViews();
-        String className = getIntent().getStringExtra("className");
-
+    protected void initView(View view) {
+        bundle = getArguments();
+        String className = bundle.getString("className");
         tvClass.setText(className);
         Date date = new Date();
         tvDate.setText(DateUtil.getFormatTimeDate(date));
         tvWeek.setText(DateUtil.getWeekOfDate(date));
+        initViews();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_un_attend;
+    }
+
+    public void getUserByClassId() {
+        if (mPresenter != null) {
+            mPresenter.getUserByClassId();
+        }
+
+    }
 
     private void initViews() {
         userInfoList = new ArrayList<>();
-        attentionAdapterT = new AttentionAdapterT(userInfoList, this);
+        attentionAdapterT = new UnAttentionAdapter(userInfoList, getActivity());
         rvMember.setItemAnimator(new DefaultItemAnimator());
         rvMember.setAdapter(attentionAdapterT);
         CardItemTouchHelperCallback<UserInfo> cardCallback = new CardItemTouchHelperCallback<>(rvMember.getAdapter(), userInfoList);
@@ -91,7 +113,7 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
 
     @Override
     public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
-        AttentionAdapterT.ViewHolder holder = (AttentionAdapterT.ViewHolder) viewHolder;
+        UnAttentionAdapter.ViewHolder holder = (UnAttentionAdapter.ViewHolder) viewHolder;
         viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
         if (direction == CardConfig.SWIPING_LEFT) {
             holder.likeImageView.setAlpha(Math.abs(ratio));
@@ -111,7 +133,7 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, UserInfo userInfo, int direction) {
-        AttentionAdapterT.ViewHolder holder = (AttentionAdapterT.ViewHolder) viewHolder;
+        UnAttentionAdapter.ViewHolder holder = (UnAttentionAdapter.ViewHolder) viewHolder;
         currentUserInfo = userInfo;
         viewHolder.itemView.setAlpha(1f);
         holder.dislikeImageView.setAlpha(0f);
@@ -148,7 +170,7 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
 
     @Override
     public String getClassId() {
-        return getIntent().getStringExtra("classId");
+        return String.valueOf(bundle.getInt("classId", -1));
     }
 
     @Override
@@ -164,7 +186,7 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
 
     @Override
     public int getScheduleId() {
-        return getIntent().getIntExtra("scheduleId", 0);
+        return bundle.getInt("scheduleId", 0);
     }
 
     @Override
@@ -174,6 +196,13 @@ public class AttentionActivityT extends BaseClassActivity<AttentionPresenterT> i
 
     @Override
     public void setUserInfoList(List<UserInfo> userInfoList) {
+        if (userInfoList.size() == 0) {
+            rvMember.setVisibility(View.GONE);
+            llNodata.setVisibility(View.VISIBLE);
+        }else {
+            rvMember.setVisibility(View.VISIBLE);
+            llNodata.setVisibility(View.GONE);
+        }
         String data = "总人数:" + userInfoList.size() + "人";
         tvNumber.setText(data);
         this.userInfoList.clear();

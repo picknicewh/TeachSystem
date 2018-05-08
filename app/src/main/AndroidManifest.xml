@@ -70,7 +70,7 @@
             android:name=".ui.attend.student.AttentionActivityS"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.attend.teacher.AttentionActivityT"
+            android:name=".ui.attend.teacher.UnAttentionFragment"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.leave.teacher.LeaveListActivity"
@@ -115,6 +115,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.my.MyAttendActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.attend.teacher.AttendResultActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
